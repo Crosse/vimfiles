@@ -34,3 +34,6 @@
 [submodule "bundle/Dockerfile.vim"]
 	path = bundle/Dockerfile.vim
 	url = https://github.com/ekalinin/Dockerfile.vim
+[submodule "bundle/vim-octopress"]
+	path = bundle/vim-octopress
+	url = https://github.com/tangledhelix/vim-octopress.git

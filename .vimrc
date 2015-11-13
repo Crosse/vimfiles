@@ -204,6 +204,10 @@ if !empty(glob(s:vundle_path. "/autoload/vundle.vim"))
 
     " Vim syntax file for Docker's Dockerfile and snippets for snipMate
     Plugin 'ekalinin/Dockerfile.vim'
+
+    " Octopress support for Vim
+    Plugin 'tangledhelix/vim-octopress'
+
     " All plugins must be added before the following line.
     call vundle#end()
     "
