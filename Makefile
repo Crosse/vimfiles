@@ -1,15 +1,11 @@
-.PHONY: update_git update_repo submodules ycm
+.PHONY: update ycm
 
-update_git: update_repo submodules
-
-update_repo:
-	@echo "==> Updating local repo"
+update:
+	@echo "==> Updating local repo from remote"
 	@git pull --rebase
-
-
-submodules:
 	@echo "==> Updating submodules"
 	@git submodule update --init --recursive
+
 
 ycm:
 	@echo "==> Building YouCompleteMe"
