@@ -18,6 +18,3 @@ ycm:
 			--clang-completer		\
 			--gocode-completer		\
 			--omnisharp-completer
-
-
-
