@@ -109,7 +109,7 @@ endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "                                               "
-"            Vundle and Vim plugins             "
+"           vim-plug and Vim plugins            "
 "                                               "
 """""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -118,22 +118,18 @@ if g:os.is_windows
 elseif g:os.is_unix || g:os.is_mac
     let s:vimdir = glob("$HOME/.vim")
 else
-    echom "Unable to determine the location of Vundle!"
+    echom "Unable to determine the location of vim-plug!"
 endif
-let s:vundle_path = glob(s:vimdir . "/bundle/Vundle.vim")
-if !empty(glob(s:vundle_path. "/autoload/vundle.vim"))
+if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     filetype off
-    let &runtimepath = s:vundle_path . "," . &runtimepath
-    call vundle#begin()
-
-    " Let Vundle manage Vundle.  This is required.
-    Plugin 'gmarik/Vundle.vim'
+    "let &runtimepath = s:vimplug_path . "," . &runtimepath
+    call plug#begin()
 
     " Load plugins here.
 
     " lean & mean status/tabline for vim that's light as air
     " https://github.com/bling/vim-airline
-    Plugin 'bling/vim-airline'
+    Plug 'bling/vim-airline'
     if !exists("g:airline_symbols")
         let g:airline_symbols = {}
     endif
@@ -157,19 +153,19 @@ if !empty(glob(s:vundle_path. "/autoload/vundle.vim"))
 
     " a Git wrapper so awesome, it should be illegal
     " https://github.com/tpope/vim-fugitive
-    Plugin 'tpope/vim-fugitive'
+    Plug 'tpope/vim-fugitive'
 
     " A vim plugin to display the indention levels with thin vertical lines
     " https://github.com/Yggdroot/indentLine
-    Plugin 'Yggdroot/indentLine'
+    Plug 'Yggdroot/indentLine'
 
     " gitk for Vim
     " https://github.com/gregsexton/gitv
-    "Plugin 'gregsexton/gitv'
+    "Plug 'gregsexton/gitv'
 
     " Go development plugin for Vim
     " https://github.com/fatih/vim-go
-    Plugin 'fatih/vim-go'
+    Plug 'fatih/vim-go', { 'for': 'go' }
     let g:go_fmt_command = "goimports"
     let g:go_highlight_functions = 1
     let g:go_highlight_methods = 1
@@ -180,44 +176,42 @@ if !empty(glob(s:vundle_path. "/autoload/vundle.vim"))
 
     " Syntax checking hacks for vim
     " https://github.com/scrooloose/syntastic
-    Plugin 'scrooloose/syntastic'
+    Plug 'scrooloose/syntastic'
 
     " A code-completion engine for Vim
     " https://github.com/Valloric/YouCompleteMe
     if g:os.realname != "OpenBSD" && g:os.is_windows == 0
         " ...that unfortunately won't compile on OpenBSD.
-        Plugin 'Valloric/YouCompleteMe'
+        Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --gocode-completer --omnisharp-completer' }
         let g:ycm_key_list_select_completion = ['<Down>']
     endif
 
     " Vim plugin that displays tags in a window, ordered by scope
     " https://github.com/majutsushi/tagbar
-    Plugin 'majutsushi/tagbar'
+    Plug 'majutsushi/tagbar'
     nmap <leader>t :TagbarToggle<CR>
 
     " UltiSnips - The ultimate snippet solution for Vim
-    Plugin 'SirVer/ultisnips'
-    Plugin 'honza/vim-snippets'
+    " vim-snippets is dependent on ultisnips
+    Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
     " vim-systemd-syntax - because I hate myself, but not that much
-    Plugin 'Matt-Deacalion/vim-systemd-syntax'
+    Plug 'Matt-Deacalion/vim-systemd-syntax'
 
     " Vim syntax file for Docker's Dockerfile and snippets for snipMate
-    Plugin 'ekalinin/Dockerfile.vim'
-
-    " Octopress support for Vim
-    Plugin 'tangledhelix/vim-octopress'
+    Plug 'ekalinin/Dockerfile.vim'
 
     " All plugins must be added before the following line.
-    call vundle#end()
-    "
+    call plug#end()
+
     " Brief help
-    " :PluginList          - list configured plugins
-    " :PluginInstall(!)    - install (update) plugins
-    " :PluginSearch(!) foo - search (or refresh cache first) for foo
-    " :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
+    " :PlugStatus        - Check the status of plugins
+    " :PlugInstall       - install plugins
+    " :PlugUpdate        - update plugins
+    " :PlugUpgrade       - update vim-plug itself
+    " :PlugClean(!)      - confirm (or auto-approve) removal of unused plugins
     "
-    " see :h vundle for more details or wiki for FAQ
+    " see https://github.com/junegunn/vim-plug for more information.
 endif
 
 filetype plugin indent on

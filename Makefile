@@ -1,23 +1,32 @@
-.PHONY: vim-plug install update ycm
+.PHONY: default vim-plug install update ycm
 
 default: update install
 
 vim-plug:
 	@echo "==> Downloading vim-plug"
-	@$(DLCMD) autoload/plug.vim --create-dirs \
+	@$(DLCMD) $(CURDIR)/autoload/plug.vim --create-dirs \
 	    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-install: vim-plug
+install: vim-plug plugins
 	@echo "==> Symlinking Vim config files into $(HOME)"
 	@ln -sfn "$(CURDIR)/.vimrc" "$(HOME)/.vimrc"
 	@ln -sfn "$(CURDIR)/" "$(HOME)/.vim"
-	@echo "Be sure to 'make update' if necessary."
+
+plugins: vim-plug
+	@echo "==> Installing plugins"
+	@vim +PlugUpgrade +PlugInstall +qall
 
 update:
 	@echo "==> Updating local repo from remote"
 	@git pull --rebase
 	@echo "==> Updating submodules"
 	@git submodule update --init --recursive
+
+clean:
+	@echo "==> Removing installed plugins"
+	@$(RM) -rf $(CURDIR)/bundle $(CURDIR)/plugged
+	@echo "==> Removing vim-plug"
+	@$(RM) -rf $(CURDIR)/autoload/plug.vim
 
 ycm:
 	@echo "==> Building YouCompleteMe"
