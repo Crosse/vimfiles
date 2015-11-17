@@ -30,7 +30,7 @@ clean:
 
 ycm:
 	@echo "==> Building YouCompleteMe"
-	@$(CURDIR)/bundle/YouCompleteMe/install.py	\
+	@$(CURDIR)/plugged/YouCompleteMe/install.py	\
 			--clang-completer		\
 			--gocode-completer		\
 			--omnisharp-completer
