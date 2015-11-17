@@ -14,7 +14,7 @@ install: vim-plug plugins
 
 plugins: vim-plug
 	@echo "==> Installing plugins"
-	@vim +PlugUpgrade +PlugInstall +qall
+	@vim -u $(CURDIR)/.vimrc +PlugUpgrade +PlugInstall +qall
 
 update:
 	@echo "==> Updating local repo from remote"
