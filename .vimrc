@@ -348,7 +348,9 @@ endif
 
 " Enable folding.  This uses syntax folding (so your syntax file must
 " support folding).  It doesn't start folded by default, and sets up a
-" left-hand gutter of three columns dedicated to the folding structure.
+" left-hand gutter of four columns dedicated to the folding structure.
+" The fold column is hidden by default; you can make it visible with
+" <F10>.
 if has("folding")
     set foldmethod=syntax
     set foldnestmax=10
