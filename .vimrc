@@ -129,6 +129,8 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
 
     " lean & mean status/tabline for vim that's light as air
     Plug 'bling/vim-airline'
+    let g:airline#extensions#tabline#enabled = 1
+
     if !exists("g:airline_symbols")
         let g:airline_symbols = {}
     endif
@@ -219,6 +221,7 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
 
     " Fuzzy file, buffer, mru, tag, etc finder.
     Plug 'ctrlpvim/ctrlp.vim'
+
     " All plugins must be added before the following line.
     call plug#end()
 
@@ -578,6 +581,11 @@ set scrolloff=3
 " Automatically save the buffer when performing various commands.
 set autowrite
 
+" Do not unload a buffer when it is abandoned. Helps when moving between
+" multiple buffers so that Vim doesn't try to reload the file every
+" single time.
+set hidden
+
 " Set the terminal title, if possible.
 set title
 
@@ -677,10 +685,10 @@ imap <PageUp> <C-O><C-U>
 imap <PageDown> <C-O><C-D>
 
 " Map/remap Control-J and Control-K to cycle left and right through tabs
-map <C-J> :tabnext<CR>
-map <C-K> :tabprev<CR>
-imap <C-J> <C-O>:tabnext<CR>
-imap <C-K> <C-O>:tabprev<CR>
+map <C-J> :bnext<CR>
+map <C-K> :bprevious<CR>
+imap <C-J> <C-O>:bnext<CR>
+imap <C-K> <C-O>:bprevious<CR>
 
 " Use <F6> to call :make
 map <F6> :make<CR>
