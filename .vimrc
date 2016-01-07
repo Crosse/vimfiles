@@ -191,6 +191,9 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
         " ...that unfortunately won't compile on OpenBSD.
         Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --gocode-completer --omnisharp-completer' }
         let g:ycm_key_list_select_completion = ['<Down>']
+        if g:os.is_mac
+            let g:ycm_path_to_python_interpreter = '/usr/bin/python'
+        endif
     endif
 
     " Vim plugin that displays tags in a window, ordered by scope
