@@ -172,6 +172,20 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     " Syntax checking hacks for vim
     Plug 'scrooloose/syntastic'
 
+    " A tree explorer plugin for Vim.
+    " ...and a git plugin for NERDTree.
+    Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+
+    " Exit Vim when NERDTree is the only window open.
+    " autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+    " Open NERDTree automatically when Vim starts.
+    "autocmd VimEnter * if exists("loaded_nerd_tree") | NERDTree | endif
+    "autocmd StdinReadPre * let s:std_in=1
+    "autocmd VimEnter * if (exists("loaded_nerd_tree") && argc() == 0 && !exists("s:std_in")) | NERDTree | endif
+
+    " Toggle NERDTree using Ctrl-N
+    map <C-N> :NERDTreeToggle<CR>
+
     " A code-completion engine for Vim
     if g:os.realname != "OpenBSD" && g:os.is_windows == 0
         " ...that unfortunately won't compile on OpenBSD.
