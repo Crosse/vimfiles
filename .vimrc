@@ -188,24 +188,27 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     " Toggle NERDTree using Ctrl-N
     map <C-N> :NERDTreeToggle<CR>
 
-    " A code-completion engine for Vim
-    if g:os.realname != "OpenBSD" && g:os.is_windows == 0
-        " ...that unfortunately won't compile on OpenBSD.
-        Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --gocode-completer --omnisharp-completer' }
-        let g:ycm_key_list_select_completion = ['<Down>']
-        if g:os.is_mac
-            let g:ycm_path_to_python_interpreter = '/usr/bin/python'
+    if has('py') || has('py3')
+        " Plugins that require Python support.
+        if g:os.realname != "OpenBSD" && g:os.is_windows == 0
+            " A code-completion engine for Vim
+            " https://github.com/Valloric/YouCompleteMe
+            Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --gocode-completer --omnisharp-completer' }
+            let g:ycm_key_list_select_completion = ['<Down>']
+            if g:os.is_mac
+                let g:ycm_path_to_python_interpreter = '/usr/bin/python'
+            endif
         endif
+
+        " UltiSnips - The ultimate snippet solution for Vim
+        " vim-snippets is dependent on ultisnips
+        Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
     endif
 
     " Vim plugin that displays tags in a window, ordered by scope
     " https://github.com/majutsushi/tagbar
     Plug 'majutsushi/tagbar'
     nmap <leader>t :TagbarToggle<CR>
-
-    " UltiSnips - The ultimate snippet solution for Vim
-    " vim-snippets is dependent on ultisnips
-    Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
     " vim-systemd-syntax - because I hate myself, but not that much
     Plug 'Matt-Deacalion/vim-systemd-syntax'
