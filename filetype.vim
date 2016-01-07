@@ -8,8 +8,10 @@ augroup filetypedetect
     au! BufRead,BufNewFile *.ps1  setfiletype ps1
     au! BufRead,BufNewFile *.psm1 setfiletype ps1
     au! BufRead,BufNewFile *.psd1 setfiletype ps1
-    " Octopress
-    au! BufRead,BufNewFile *.markdown setfiletype octopress
+
+    " *.md is Markdown, not Modula-2.
+    au! BufRead,BufNewFile *.md setfiletype markdown
+
     " human-readable files
     au! BufRead,BufNewFile *.txt setfiletype human
     au! BufRead,BufNewFile *.tex setfiletype human
