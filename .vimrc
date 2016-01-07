@@ -128,7 +128,6 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     " Load plugins here.
 
     " lean & mean status/tabline for vim that's light as air
-    " https://github.com/bling/vim-airline
     Plug 'bling/vim-airline'
     if !exists("g:airline_symbols")
         let g:airline_symbols = {}
@@ -152,19 +151,15 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     let g:airline_symbols.whitespace = 'Ξ'
 
     " a Git wrapper so awesome, it should be illegal
-    " https://github.com/tpope/vim-fugitive
     Plug 'tpope/vim-fugitive'
 
     " A vim plugin to display the indention levels with thin vertical lines
-    " https://github.com/Yggdroot/indentLine
     Plug 'Yggdroot/indentLine'
 
     " gitk for Vim
-    " https://github.com/gregsexton/gitv
     "Plug 'gregsexton/gitv'
 
     " Go development plugin for Vim
-    " https://github.com/fatih/vim-go
     Plug 'fatih/vim-go', { 'for': 'go' }
     let g:go_fmt_command = "goimports"
     let g:go_highlight_functions = 1
@@ -175,11 +170,9 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 
     " Syntax checking hacks for vim
-    " https://github.com/scrooloose/syntastic
     Plug 'scrooloose/syntastic'
 
     " A code-completion engine for Vim
-    " https://github.com/Valloric/YouCompleteMe
     if g:os.realname != "OpenBSD" && g:os.is_windows == 0
         " ...that unfortunately won't compile on OpenBSD.
         Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --gocode-completer --omnisharp-completer' }
