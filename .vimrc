@@ -211,6 +211,14 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     " Vim syntax file for Docker's Dockerfile and snippets for snipMate
     Plug 'ekalinin/Dockerfile.vim'
 
+    " Vim syntax for TOML
+    Plug 'cespare/vim-toml'
+
+    " EditorConfig plugin for Vim (see http://editorconfig.org)
+    Plug 'editorconfig/editorconfig-vim'
+
+    " Fuzzy file, buffer, mru, tag, etc finder.
+    Plug 'ctrlpvim/ctrlp.vim'
     " All plugins must be added before the following line.
     call plug#end()
 
