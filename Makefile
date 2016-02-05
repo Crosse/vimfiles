@@ -4,7 +4,8 @@ default: install
 
 vim-plug:
 	@echo "==> Downloading vim-plug"
-	@$(DLCMD) $(CURDIR)/autoload/plug.vim --create-dirs \
+	@mkdir -p $(CURDIR)/autoload
+	@$(DLCMD) $(CURDIR)/autoload/plug.vim \
 	    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 install: vim-plug plugins
