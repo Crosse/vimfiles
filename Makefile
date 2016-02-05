@@ -1,6 +1,6 @@
 .PHONY: default vim-plug install update ycm
 
-default: update install
+default: install
 
 vim-plug:
 	@echo "==> Downloading vim-plug"
@@ -15,12 +15,6 @@ install: vim-plug plugins
 plugins: vim-plug
 	@echo "==> Installing plugins"
 	@vim -u $(CURDIR)/.vimrc +PlugUpgrade +PlugInstall +qall
-
-update:
-	@echo "==> Updating local repo from remote"
-	@git pull --rebase
-	@echo "==> Updating submodules"
-	@git submodule update --init --recursive
 
 clean:
 	@echo "==> Removing installed plugins"
