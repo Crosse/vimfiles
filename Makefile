@@ -30,8 +30,8 @@ ycm:
 			--omnisharp-completer
 
 
-WGET := $(shell command -v wget)
-CURL := $(shell command -v curl)
+WGET := $(shell command -v wget;)
+CURL := $(shell command -v curl;)
 
 ifdef WGET
 	DLCMD := $(WGET) -O
