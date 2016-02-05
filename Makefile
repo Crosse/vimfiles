@@ -11,7 +11,6 @@ vim-plug:
 install: vim-plug plugins
 	@echo "==> Symlinking Vim config files into $(HOME)"
 	@ln -sfn "$(CURDIR)/.vimrc" "$(HOME)/.vimrc"
-	@ln -sfn "$(CURDIR)/" "$(HOME)/.vim"
 
 plugins: vim-plug
 	@echo "==> Installing plugins"
