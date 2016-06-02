@@ -128,7 +128,7 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     " Load plugins here.
 
     " lean & mean status/tabline for vim that's light as air
-    Plug 'bling/vim-airline'
+    Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
     let g:airline#extensions#tabline#enabled = 1
 
     if !exists("g:airline_symbols")
