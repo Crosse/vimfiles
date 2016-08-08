@@ -188,7 +188,7 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     " Toggle NERDTree using Ctrl-N
     map <C-N> :NERDTreeToggle<CR>
 
-    if has('py') || has('py3')
+    if has('python') || has('python3')
         " Plugins that require Python support.
         if g:os.realname != "OpenBSD" && g:os.is_windows == 0
             " A code-completion engine for Vim
@@ -203,6 +203,9 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
         " UltiSnips - The ultimate snippet solution for Vim
         " vim-snippets is dependent on ultisnips
         Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+        " EditorConfig plugin for Vim (see http://editorconfig.org)
+        Plug 'editorconfig/editorconfig-vim'
     endif
 
     " Vim plugin that displays tags in a window, ordered by scope
@@ -218,9 +221,6 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
 
     " Vim syntax for TOML
     Plug 'cespare/vim-toml'
-
-    " EditorConfig plugin for Vim (see http://editorconfig.org)
-    Plug 'editorconfig/editorconfig-vim'
 
     " Fuzzy file, buffer, mru, tag, etc finder.
     Plug 'ctrlpvim/ctrlp.vim'
