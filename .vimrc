@@ -183,6 +183,15 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     let g:syntastic_auto_loc_list = 1
     let g:syntastic_check_on_open = 1
     let g:syntastic_check_on_wq = 0
+    " I only want to use one checker for Python, and I want to use them
+    " in this order. Find the first available one and use that
+    " exclusively. (Maybe this isn't needed.)
+    for pychecker in ['flake8', 'pyflake', 'pylint']
+        if executable(pychecker)
+            let g:syntastic_python_checkers = [pychecker]
+            break
+        endif
+    endfor
 
     " A tree explorer plugin for Vim.
     " ...and a git plugin for NERDTree.
