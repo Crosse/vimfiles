@@ -277,6 +277,11 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     " Vim syntax highlighting for .tmux.conf
     Plug 'tmux-plugins/vim-tmux'
 
+    " A better JSON plugin for Vim
+    Plug 'elzr/vim-json'
+    " ...but disable quote concealment
+    let g:vim_json_syntax_conceal = 0
+
     " All plugins must be added before the following line.
     call plug#end()
 
