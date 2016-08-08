@@ -227,10 +227,23 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
         Plug 'editorconfig/editorconfig-vim'
     endif
 
-    " Vim plugin that displays tags in a window, ordered by scope
-    " https://github.com/majutsushi/tagbar
-    Plug 'majutsushi/tagbar'
-    nmap <leader>t :TagbarToggle<CR>
+    if executable('ctags') || executable('exctags')
+        " Vim plugin that displays tags in a window, ordered by scope
+        " https://github.com/majutsushi/tagbar
+        Plug 'majutsushi/tagbar'
+        nmap <leader>t :TagbarToggle<CR>
+
+        " tagbar relies on Exuberant Ctags. If 'ctags' is not this (as
+        " is the case on OSX and other BSD variants), then invoking
+        " tagbar will fail with an error explaining this.
+        "
+        " With that in mind, use exctags if it exists. (On OSX, this is
+        " installed by pkgsrc.) Other versions of ctags with different
+        " names could be handled similarly.
+        if executable('exctags')
+            let g:tagbar_ctags_bin = 'exctags'
+        endif
+    endif
 
     " vim-systemd-syntax - because I hate myself, but not that much
     Plug 'Matt-Deacalion/vim-systemd-syntax'
