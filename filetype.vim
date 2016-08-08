@@ -17,7 +17,17 @@ augroup filetypedetect
     au! BufRead,BufNewFile *.tex setfiletype human
     au! BufRead,BufNewFile COMMIT_EDITMSG setlocal formatoptions+=t textwidth=72
 
-    au! BUfRead,BufNewFile *.ino setfiletype cpp
-    au! BUfRead,BufNewFile *.pde setfiletype cpp
+    " Arduino sketches.
+    au! BufRead,BufNewFile *.ino setfiletype cpp
+    au! BufRead,BufNewFile *.pde setfiletype cpp
+
+    " Use tabs for Go that look 8-characters wide.
+    au! FileType go set noexpandtab tabstop=8 shiftwidth=8
+
+    " Use 2 spaces to indent YAML
+    au! FileType yaml set expandtab tabstop=2 shiftwidth=2
+
+    " Use 2 spaces to indent JSON.
+    au! FileType json set expandtab tabstop=2 shiftwidth=2
 augroup END
 
