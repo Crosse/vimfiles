@@ -207,17 +207,34 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     " Toggle NERDTree using Ctrl-N
     map <C-N> :NERDTreeToggle<CR>
 
+    " Plugins that require Python support hide here.
     if has('python') || has('python3')
-        " Plugins that require Python support.
-        if g:os.realname != "OpenBSD" && g:os.is_windows == 0
-            " A code-completion engine for Vim
-            " https://github.com/Valloric/YouCompleteMe
-            Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --gocode-completer --omnisharp-completer' }
-            let g:ycm_key_list_select_completion = ['<Down>']
-            if g:os.is_mac
-                let g:ycm_path_to_python_interpreter = '/usr/bin/python'
-            endif
+        " YouCompleteMe, a code-completion engine for Vim
+        " The following if-statements build up a command line depending
+        " on whether various things are installed. For instance, if
+        " msbuild is installed, then instruct YCM's installer to build
+        " the OmniSharp completer.
+        let ycm_install_command = ['./install.py', '--clang-completer']
+
+        if executable('msbuild') || executable('xbuild')
+            call add(ycm_install_command, '--omnisharp-completer')
         endif
+
+        if executable('go')
+            call add(ycm_install_command, '--gocode-completer')
+        endif
+
+        if executable('node') && executable('npm')
+            call add(ycm_install_command, '--tern-completer')
+        endif
+
+        if executable('cargo')
+            call add(ycm_install_command, '--racer-completer')
+        endif
+
+        Plug 'Valloric/YouCompleteMe', { 'do': join(ycm_install_command) }
+        let g:ycm_key_list_select_completion = ['<Down>']
+        " This is the end of the YCM stuff.
 
         " UltiSnips - The ultimate snippet solution for Vim
         " vim-snippets is dependent on ultisnips
