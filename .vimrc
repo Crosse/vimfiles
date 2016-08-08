@@ -162,17 +162,27 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     "Plug 'gregsexton/gitv'
 
     " Go development plugin for Vim
-    Plug 'fatih/vim-go', { 'for': ['go', 'html'] }
+    Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
     let g:go_fmt_command = "goimports"
+    let g:go_fmt_autosave = 1
     let g:go_highlight_functions = 1
     let g:go_highlight_methods = 1
-    let g:go_highlight_structs = 1
+    let g:go_highlight_fields = 1
+    let g:go_highlight_types = 1
     let g:go_highlight_operators = 1
-    let g:go_highlight_build_constraints = 1
+    "let g:go_highlight_structs = 1
+    "let g:go_highlight_build_constraints = 1
+    let g:go_list_type = "quickfix"
     au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 
     " Syntax checking hacks for vim
     Plug 'scrooloose/syntastic'
+    let g:syntastic_go_checkers = ['golint', 'govet', 'go', 'errcheck']
+    let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
 
     " A tree explorer plugin for Vim.
     " ...and a git plugin for NERDTree.
