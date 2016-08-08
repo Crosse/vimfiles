@@ -21,14 +21,6 @@ clean:
 	@echo "==> Removing vim-plug"
 	@$(RM) -rf $(CURDIR)/autoload/plug.vim
 
-ycm:
-	@echo "==> Building YouCompleteMe"
-	@$(CURDIR)/plugged/YouCompleteMe/install.py	\
-			--clang-completer		\
-			--gocode-completer		\
-			--omnisharp-completer
-
-
 WGET := $(shell command -v wget;)
 CURL := $(shell command -v curl;)
 
