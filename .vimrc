@@ -244,6 +244,9 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     " Fuzzy file, buffer, mru, tag, etc finder.
     Plug 'ctrlpvim/ctrlp.vim'
 
+    " Vim syntax highlighting for .tmux.conf
+    Plug 'tmux-plugins/vim-tmux'
+
     " All plugins must be added before the following line.
     call plug#end()
 
