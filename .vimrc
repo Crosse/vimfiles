@@ -216,9 +216,14 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
         " on whether various things are installed. For instance, if
         " msbuild is installed, then instruct YCM's installer to build
         " the OmniSharp completer.
-        let ycm_install_command = ['./install.py', '--clang-completer']
+        if g:os.is_windows
+            let ycm_install_command = ['install.py']
+        else
+            let ycm_install_command = ['./install.py']
+        endif
+        call add(ycm_install_command, '--clang-completer')
 
-        if executable('msbuild') || executable('xbuild')
+        if executable('msbuild.exe') || executable('xbuild')
             call add(ycm_install_command, '--omnisharp-completer')
         endif
 
