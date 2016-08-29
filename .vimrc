@@ -82,7 +82,6 @@ function! GetOperatingSystem()
             break
         endif
     endfor
-    let g:os.realname = substitute(system("uname"), "\n", "", "")
     let g:os.name = "other"
     let g:os.is_windows = 0
     let g:os.is_mac = 0
@@ -90,12 +89,15 @@ function! GetOperatingSystem()
     if index(l:os_types.win, g:os.fullname) >= 0
         let g:os.name = "windows"
         let g:os.is_windows = 1
-    elseif index(l:os_types.mac, g:os.fullname) >= 0
-        let g:os.name = "mac"
-        let g:os.is_mac = 1
-    elseif index(l:os_types.unix, g:os.fullname) >= 0
-        let g:os.name = "unix"
-        let g:os.is_unix = 1
+    else
+        "let g:os.realname = substitute(system("uname"), "\n", "", "")
+        if index(l:os_types.mac, g:os.fullname) >= 0
+            let g:os.name = "mac"
+            let g:os.is_mac = 1
+        elseif index(l:os_types.unix, g:os.fullname) >= 0
+            let g:os.name = "unix"
+            let g:os.is_unix = 1
+        endif
     endif
 endfunction
 call GetOperatingSystem()
