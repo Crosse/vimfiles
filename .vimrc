@@ -284,6 +284,10 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     " ...but disable quote concealment
     let g:vim_json_syntax_conceal = 0
 
+    " Vim configuration for Rust.
+    Plug 'rust-lang/rust.vim'
+    " Run rustfmt on buffer save
+    let g:rustfmt_autosave = 1
     " All plugins must be added before the following line.
     call plug#end()
 
