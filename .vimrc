@@ -319,7 +319,7 @@ filetype plugin indent on
 let s:schemes = ["molokai", "default", "solarized", "torte", "desert", "koehler", "slate"]
 
 " Fonts section.  First, create a list of desired fonts for GUI vims.
-let s:fonts = ["Source_Code_Pro", "Consolas", "Inconsolata", "Lucida_Console", "Monospace"]
+let s:fonts = ["Fira_Code", "Source_Code_Pro", "Consolas", "Inconsolata", "Lucida_Console", "Monospace"]
 let s:win_font_size = "h11"
 let s:mac_font_size = "h14"
 let s:unix_font_size = "h11"
