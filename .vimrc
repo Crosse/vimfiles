@@ -133,25 +133,23 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
     let g:airline#extensions#tabline#enabled = 1
 
+    " Set custom symbols to use.
     if !exists("g:airline_symbols")
         let g:airline_symbols = {}
     endif
 
-    let g:airline_left_sep = ""
-    let g:airline_left_alt_sep = ""
-    let g:airline_right_sep = ""
-    let g:airline_right_alt_sep = ""
-
-    " '¶' is \u00b6
-    let g:airline_symbols.linenr = '¶'
-    " '⎇' is \u2387
-    let g:airline_symbols.branch = '⎇'
-    " '✎' is \u270e
-    "let g:airline_symbols.paste = '✎'
+    " If using a font with Powerline support, these will look fantastic.
+    " If not, get ready for the Unicode box-o-wtf all over the place.
+    " Fonts with support for the Powerline glyphs include Source Code
+    " Pro and Fira Code.
+    let g:airline_left_alt_sep = ''
+    let g:airline_left_sep = ''
+    let g:airline_right_alt_sep = ''
+    let g:airline_right_sep = ''
+    let g:airline_symbols.branch = ''
+    let g:airline_symbols.linenr = ''
     let g:airline_symbols.paste = '[paste]'
-    " '✘' is \u2708
-    let g:airline_symbols.readonly = '[✘]'
-    " 'Ξ' is \u039E
+    let g:airline_symbols.readonly = ''
     let g:airline_symbols.whitespace = 'Ξ'
 
     " a Git wrapper so awesome, it should be illegal
