@@ -21,7 +21,7 @@
 "   be able to edit crontabs ('crontab -e'), you'll want to add the
 "   following line to your .profile:
 "
-"   alias crontab="VIM_CRONTAB=true crontab"
+"     alias crontab="VIM_CRONTAB=true crontab"
 "
 "   This will disable some backup features that crontab (at least on Mac
 "   OS X) does not like.  See http://goo.gl/LP6X0 for more information.
@@ -124,7 +124,6 @@ else
 endif
 if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     filetype off
-    "let &runtimepath = s:vimplug_path . "," . &runtimepath
     call plug#begin()
 
     " Load plugins here.
