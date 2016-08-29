@@ -348,6 +348,12 @@ if g:os.is_windows
 elseif g:os.is_mac
     " MacVim-specific settings
     let s:font_size=s:mac_font_size
+
+    " Enable font ligatures in MacVim.
+    " Note that ligatures still seem...experimental.
+    if exists("+macligatures")
+        set macligatures
+    endif
 else
     " Unix-specific settings for everthing else.
     let s:font_size=s:unix_font_size
