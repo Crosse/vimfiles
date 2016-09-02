@@ -322,9 +322,9 @@ filetype plugin indent on
 let s:schemes = ["molokai", "default", "solarized", "torte", "desert", "koehler", "slate"]
 
 " Fonts section.  First, create a list of desired fonts for GUI vims.
-let s:fonts = ["Fira_Code", "Source_Code_Pro", "Consolas", "Inconsolata", "Lucida_Console", "Monospace"]
+let s:fonts = ["Fira_Code_Retina", "Source_Code_Pro", "Consolas", "Inconsolata", "Lucida_Console", "Monospace"]
 let s:win_font_size = "h11"
-let s:mac_font_size = "h14"
+let s:mac_font_size = "h15"
 let s:unix_font_size = "h11"
 
 let s:print_fonts = s:fonts
@@ -349,9 +349,14 @@ elseif g:os.is_mac
     " MacVim-specific settings
     let s:font_size=s:mac_font_size
 
-    " Enable font ligatures in MacVim.
-    " Note that ligatures still seem...experimental.
-    if exists("+macligatures")
+    " Enable ligatures in fonts that support them.
+    " This only works for MacVim currently.
+    " Examples of good fonts for coding that use ligatures include:
+    "   - Fira Code (https://github.com/tonsky/FiraCode)
+    "   - Hasklig (https://github.com/i-tu/Hasklig)
+    " See https://medium.com/larsenwork-andreas-larsen/ligatures-coding-fonts-5375ab47ef8e
+    " for more information on why ligatures can be useful for coding fonts.
+    if has("gui_running") && exists("&macligatures")
         set macligatures
     endif
 else
