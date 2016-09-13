@@ -1,15 +1,12 @@
 .PHONY: default vim-plug install update ycm
 
-default: install
+default: vim-plug plugins
+	@echo "==> If $(HOME)/.vimrc exists, you may want to remove it."
 
 vim-plug:
 	@echo "==> Downloading vim-plug"
 	@$(DLCMD) $(CURDIR)/autoload/plug.vim \
 	    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-install: vim-plug plugins
-	@echo "==> Symlinking Vim config files into $(HOME)"
-	@ln -sfn "$(CURDIR)/.vimrc" "$(HOME)/.vimrc"
 
 plugins: vim-plug
 	@echo "==> Installing plugins"
