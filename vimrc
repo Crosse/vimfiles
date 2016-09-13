@@ -345,6 +345,13 @@ if g:os.is_windows
     behave mswin
     source $VIMRUNTIME/mswin.vim
     let s:font_size=s:win_font_size
+
+    if has("gui_running") && exists("&renderoptions")
+        if g:os.is_windows
+            " Use DirectX to draw glyphs on Windows. This is new in Vim 8.
+            set renderoptions=type:directx
+        endif
+    endif
 elseif g:os.is_mac
     " MacVim-specific settings
     let s:font_size=s:mac_font_size
