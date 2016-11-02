@@ -10,7 +10,7 @@ vim-plug:
 
 plugins: vim-plug
 	@echo "==> Installing plugins"
-	@vim -u $(CURDIR)/.vimrc +PlugUpgrade +PlugInstall +qall
+	@vim -u $(CURDIR)/vimrc +PlugUpgrade +PlugInstall +qall
 
 clean:
 	@echo "==> Removing installed plugins"
