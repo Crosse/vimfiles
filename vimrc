@@ -169,8 +169,9 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     let g:go_highlight_fields = 1
     let g:go_highlight_types = 1
     let g:go_highlight_operators = 1
-    "let g:go_highlight_structs = 1
-    "let g:go_highlight_build_constraints = 1
+    let g:go_highlight_interfaces = 1
+    let g:go_highlight_structs = 1
+    let g:go_highlight_build_constraints = 1
     let g:go_list_type = "quickfix"
     au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 
@@ -290,6 +291,9 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     Plug 'rust-lang/rust.vim'
     " Run rustfmt on buffer save
     let g:rustfmt_autosave = 1
+
+    " Shows a git diff in the gutter.
+    Plug 'airblade/vim-gitgutter'
 
     " All plugins must be added before the following line.
     call plug#end()
