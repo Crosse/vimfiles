@@ -36,7 +36,7 @@
 "   F4 - toggle Gundo
 "   F5 - toggle list mode; i.e., 'Show Codes'
 "   F6 - execute 'make' in the current directory
-"   F8 - toggle Tagbar
+"   F8 - toggle Tagbar (also <leader>t)
 "   F9 - toggle nearest fold open and closed
 "   F10 - toggle the fold column
 "
@@ -48,6 +48,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " This file isn't compatible with vi.
+" Note: nvim ignores this. It is basically always set.
 set nocompatible
 
 " don't have files trying to override this .vimrc.  If you like adding
@@ -652,6 +653,7 @@ set nostartofline
 " the screen for redrawing, instead of using insert/delete line
 " commands.  Improves smoothness of redrawing when there are multiple
 " windows and the terminal does not support a scrolling region.
+" Note: nvim ignores this.
 set ttyfast
 
 " Do not redraw screen while executing macros, registers and other
