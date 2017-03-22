@@ -33,13 +33,14 @@
 "   here.
 "
 "   F2 - toggle spell check
-"   F4 - toggle search highlighting
-"   Enter - in normal mode, disable search highlighting temporarily
+"   F4 - toggle Gundo
 "   F5 - toggle list mode; i.e., 'Show Codes'
 "   F6 - execute 'make' in the current directory
 "   F8 - toggle Tagbar
 "   F9 - toggle nearest fold open and closed
 "   F10 - toggle the fold column
+"
+"   Enter - in normal mode, disable search highlighting temporarily
 "   Ctrl-Space - toggle nearest fold open and closed
 "   Ctrl-Enter - same as 'O'; i.e., insert a line above the current line
 "   Ctrl-J - mapped to 'tabnext'
@@ -247,6 +248,11 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
 
         " EditorConfig plugin for Vim (see http://editorconfig.org)
         Plug 'editorconfig/editorconfig-vim'
+
+        " Visualize your Vim undo tree.
+        Plug 'sjl/gundo.vim'
+        map <silent> <F4> :GundoToggle<CR>
+        imap <silent> <F4> <C-O>:GundoToggle<CR>
     endif
 
     if executable('ctags') || executable('exctags')
@@ -451,9 +457,6 @@ if has("syntax") && (&t_Co > 2 || has("gui_running"))
     if has("extra_search")
         " Turn on search highlighting
         set hlsearch
-        " Map F4 to toggle search highlighting:
-        map <silent> <F4> :set hlsearch!<CR>:set hlsearch?<CR>
-        imap <silent> <F4> <C-O>:set hlsearch!<CR><C-O>:set hlsearch?<CR>
         " Use Enter in Normal mode to disable highlighing after searching
         nmap <silent> <CR> :nohlsearch<CR>
     endif
