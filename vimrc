@@ -598,6 +598,10 @@ if exists("&wildignorecase")
     set wildignorecase
 endif
 
+if exists ("&wildignore")
+    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.exe,*.dll,*.o,*/.deps/*
+endif
+
 " Enable the mouse in Visual, Insert, and Command modes
 " This can be weird sometimes.
 if has("mouse")
