@@ -166,6 +166,7 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
     let g:go_fmt_command = "goimports"
     let g:go_fmt_autosave = 1
+    let g:go_auto_type_info = 1
     let g:go_highlight_functions = 1
     let g:go_highlight_methods = 1
     let g:go_highlight_fields = 1
@@ -285,6 +286,7 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
 
     " Fuzzy file, buffer, mru, tag, etc finder.
     Plug 'ctrlpvim/ctrlp.vim'
+    let g:ctrlp_show_hidden=1
 
     " Vim syntax highlighting for .tmux.conf
     Plug 'tmux-plugins/vim-tmux'
@@ -612,7 +614,7 @@ if has("spell")
 endif
 
 " Look in the current directory and work upwards for a tags file.
-set tags=./tags;/
+set tags=./tags,./TAGS,/
 
 " Lower the timeout when pressing <Esc>
 set timeout timeoutlen=3000 ttimeoutlen=100
