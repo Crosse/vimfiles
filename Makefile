@@ -1,7 +1,10 @@
 .PHONY: default vim-plug install update ycm
 
-default: vim-plug plugins
+default: vim-plug plugins nvim
 	@echo "==> If $(HOME)/.vimrc exists, you may want to remove it."
+
+nvim:
+	@ln -svnf $(CURDIR) $(XDG_CONFIG_HOME)/nvim
 
 vim-plug:
 	@echo "==> Downloading vim-plug"
