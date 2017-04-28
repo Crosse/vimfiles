@@ -126,12 +126,15 @@ else
 endif
 if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     filetype off
+    let g:plug_window = 'botright new | resize 5'
+
     call plug#begin()
 
     " Load plugins here.
 
     " lean & mean status/tabline for vim that's light as air
-    Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+    Plug 'vim-airline/vim-airline'
+                \ | Plug 'vim-airline/vim-airline-themes'
     let g:airline#extensions#tabline#enabled = 1
 
     " Set custom symbols to use.
@@ -163,7 +166,7 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     "Plug 'gregsexton/gitv'
 
     " Go development plugin for Vim
-    Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+    Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
     let g:go_fmt_command = "goimports"
     let g:go_fmt_autosave = 1
     let g:go_auto_type_info = 1
@@ -198,7 +201,8 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
 
     " A tree explorer plugin for Vim.
     " ...and a git plugin for NERDTree.
-    Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+    Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+                \ | Plug 'Xuyuanp/nerdtree-git-plugin'
 
     " Exit Vim when NERDTree is the only window open.
     " autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -246,7 +250,8 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
 
         " UltiSnips - The ultimate snippet solution for Vim
         " vim-snippets is dependent on ultisnips
-        Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+        Plug 'SirVer/ultisnips'
+                    \ | Plug 'honza/vim-snippets'
 
         " EditorConfig plugin for Vim (see http://editorconfig.org)
         Plug 'editorconfig/editorconfig-vim'
@@ -290,6 +295,7 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
 
     " Vim syntax highlighting for .tmux.conf
     Plug 'tmux-plugins/vim-tmux'
+                \ | Plug 'tmux-plugins/vim-tmux-focus-events'
 
     " A better JSON plugin for Vim
     Plug 'elzr/vim-json'
@@ -303,6 +309,13 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
 
     " Shows a git diff in the gutter.
     Plug 'airblade/vim-gitgutter'
+
+    Plug 'ryanoasis/vim-devicons'
+
+    Plug 'xolox/vim-misc'
+                \ | Plug 'xolox/vim-easytags'
+    let g:easytags_async = 1
+    let g:easytags_auto_highlight = 0
 
     " All plugins must be added before the following line.
     call plug#end()
@@ -599,7 +612,7 @@ if exists("&wildignorecase")
 endif
 
 if exists ("&wildignore")
-    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.exe,*.dll,*.o,*/.deps/*
+    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.exe,*.dll,*.o,*/.deps/*,*/build/*
 endif
 
 " Enable the mouse in Visual, Insert, and Command modes
