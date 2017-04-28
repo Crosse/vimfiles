@@ -260,6 +260,9 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
         Plug 'sjl/gundo.vim'
         map <silent> <F4> :GundoToggle<CR>
         imap <silent> <F4> <C-O>:GundoToggle<CR>
+
+        Plug 'kovisoft/slimv'
+        let g:slimv_swank_cmd = '!tmux new-window -d -n REPL-SBCL "sbcl --load ~/.vim/plugged/slimv/slime/start-swank.lisp"'
     endif
 
     if executable('ctags') || executable('exctags')
@@ -612,7 +615,7 @@ if exists("&wildignorecase")
 endif
 
 if exists ("&wildignore")
-    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.exe,*.dll,*.o,*/.deps/*,*/build/*
+    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.exe,*.dll,*.o,*/.deps/*,*/build/*,*/vendor/*
 endif
 
 " Enable the mouse in Visual, Insert, and Command modes
