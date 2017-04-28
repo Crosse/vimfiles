@@ -12,6 +12,8 @@ augroup filetypedetect
     " *.md is Markdown, not Modula-2.
     au! BufRead,BufNewFile *.md setfiletype markdown
 
+    au! BufRead,BufNewFile CMakeLists.txt setfiletype cmake
+
     " human-readable files
     au! BufRead,BufNewFile *.txt setfiletype human
     au! BufRead,BufNewFile *.tex setfiletype human
@@ -22,12 +24,12 @@ augroup filetypedetect
     au! BufRead,BufNewFile *.pde setfiletype cpp
 
     " Use tabs for Go that look 8-characters wide.
-    au! FileType go set noexpandtab tabstop=8 shiftwidth=8
+    au! FileType go setl noexpandtab tabstop=8 shiftwidth=8
 
     " Use 2 spaces to indent YAML
-    au! FileType yaml set expandtab tabstop=2 shiftwidth=2
+    au! FileType yaml setl expandtab tabstop=2 shiftwidth=2
 
     " Use 2 spaces to indent JSON.
-    au! FileType json set expandtab tabstop=2 shiftwidth=2
+    au! FileType json setl expandtab tabstop=2 shiftwidth=2
 augroup END
 
