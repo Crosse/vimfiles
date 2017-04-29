@@ -11,6 +11,10 @@ vim-plug:
 	@$(DLCMD) $(CURDIR)/autoload/plug.vim \
 	    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
+plugins-update:
+	@echo "==> Updating plugins"
+	@vim -u $(CURDIR)/vimrc +PlugUpgrade +PlugUpdate +qall
+
 plugins: vim-plug
 	@echo "==> Installing plugins"
 	@vim -u $(CURDIR)/vimrc +PlugUpgrade +PlugInstall +qall
