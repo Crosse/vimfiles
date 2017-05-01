@@ -126,7 +126,7 @@ else
 endif
 if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     filetype off
-    let g:plug_window = 'botright new | resize 5'
+    let g:plug_window = 'botright new | resize 15'
 
     call plug#begin()
 
