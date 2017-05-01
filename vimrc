@@ -109,7 +109,15 @@ function! HasColorScheme(name)
      return !empty(globpath(&runtimepath, pat))
 endfunction
 
-
+if has('nvim')
+    " Set python interpreters to the pyenv versions.
+    let s:pyenv_base = glob("$HOME/.pyenv/versions")
+    if !empty(s:pyenv_base)
+        let g:python_host_prog   = glob(s:pyenv_base . "/neovim2/bin/python")
+        let g:python3_host_prog  = glob(s:pyenv_base . "/neovim3/bin/python")
+    endif
+    "set termguicolors
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "                                               "
