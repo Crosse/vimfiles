@@ -326,6 +326,8 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     let g:easytags_async = 1
     let g:easytags_auto_highlight = 0
 
+    Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+
     " All plugins must be added before the following line.
     call plug#end()
 
