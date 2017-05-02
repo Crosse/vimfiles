@@ -9,7 +9,7 @@ RUBY_VER := 2.3.1
 default: help
 
 build: 			## Install vim-plug, plugins, and neovim.
-build: vim-plug plugins neovim
+build: neovim vim-plug plugins
 
 neovim:			##@neovim Meta-target to set up neovim.
 neovim: pysetup neovim-ruby
@@ -78,7 +78,7 @@ plugins: vim-plug
 clean:			## Remove all installed plugins and vim-plug
 clean:
 	@echo "==> Removing installed plugins"
-	@$(RM) -rf $(CURDIR)/bundle $(CURDIR)/plugged
+	@$(RM) -rf $(CURDIR)/plugged $(CURDIR)/plugged
 	@echo "==> Removing vim-plug"
 	@$(RM) -rf $(CURDIR)/autoload/plug.vim
 	@echo "==> Removing neovim python autoload file"
