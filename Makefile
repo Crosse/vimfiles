@@ -2,6 +2,9 @@ PYENV := $(shell command -v pyenv;)
 PYENV_ROOT := $(shell pyenv root)
 PY2_VER := 2.7.11
 PY3_VER := 3.6.1
+RBENV := $(shell command -v rbenv;)
+RBENV_ROOT := $(shell rbenv root)
+RUBY_VER := 2.3.1
 
 default: help
 
@@ -9,18 +12,18 @@ build: 			## Install vim-plug, plugins, and neovim.
 build: vim-plug plugins neovim
 
 neovim:			##@neovim Meta-target to set up neovim.
-neovim: pysetup
+neovim: pysetup neovim-ruby
 	@ln -svnf $(CURDIR) $(XDG_CONFIG_HOME)/nvim
 
 neovim-py2env: $(PYENV_ROOT)/versions/neovim2
 $(PYENV_ROOT)/versions/neovim2:
-	pyenv install -s $(PY2_VER)
-	pyenv virtualenv $(PY2_VER) neovim2
+	$(PYENV) install -s $(PY2_VER)
+	$(PYENV) virtualenv $(PY2_VER) neovim2
 
 neovim-py3env: $(PYENV_ROOT)/versions/neovim3
 $(PYENV_ROOT)/versions/neovim3:
-	pyenv install -s $(PY3_VER)
-	pyenv virtualenv $(PY3_VER) neovim3
+	$(PYENV) install -s $(PY3_VER)
+	$(PYENV) virtualenv $(PY3_VER) neovim3
 
 pysetup:		##@neovim Create Neovim-specific Python virtualenvs.
 pysetup: neovim-py2env neovim-py3env
@@ -31,6 +34,11 @@ pysetup: neovim-py2env neovim-py3env
 	@echo "  let g:python_host_prog = '$(PYENV_ROOT)/versions/neovim2/bin/python'" >> $(CURDIR)/autoload/python.vim
 	@echo "  let g:python3_host_prog = '$(PYENV_ROOT)/versions/neovim3/bin/python'" >> $(CURDIR)/autoload/python.vim
 	@echo "endfunction" >> $(CURDIR)/autoload/python.vim
+
+neovim-ruby: $(RBENV_ROOT)/versions/neovim
+$(RBENV_ROOT)/versions/neovim:
+	$(RBENV) install -s $(RUBY_VER)
+	$(RBENV) local $(RUBY_VER)
 
 vim-plug:		##@plugins Download vim-plug
 vim-plug: $(CURDIR)/autoload
