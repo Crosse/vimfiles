@@ -48,6 +48,7 @@ $(RBENV_ROOT)/versions/$(RUBY_VER):
 ifdef RBENV
 	$(RBENV) install -s $(RUBY_VER)
 	$(RBENV) local $(RUBY_VER)
+	gem install neovim
 else
 	$(error rbenv not installed, or not found in $$PATH)
 endif
