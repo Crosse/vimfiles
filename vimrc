@@ -168,9 +168,6 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     " A vim plugin to display the indention levels with thin vertical lines
     Plug 'Yggdroot/indentLine'
 
-    " gitk for Vim
-    "Plug 'gregsexton/gitv'
-
     " Go development plugin for Vim
     Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
     let g:go_fmt_command = "goimports"
@@ -253,14 +250,6 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
         Plug 'Valloric/YouCompleteMe', { 'do': join(ycm_install_command) }
         let g:ycm_key_list_select_completion = ['<Down>']
         " This is the end of the YCM stuff.
-
-        " UltiSnips - The ultimate snippet solution for Vim
-        " vim-snippets is dependent on ultisnips
-        Plug 'SirVer/ultisnips'
-                    \ | Plug 'honza/vim-snippets'
-
-        " EditorConfig plugin for Vim (see http://editorconfig.org)
-        Plug 'editorconfig/editorconfig-vim'
 
         " Visualize your Vim undo tree.
         Plug 'sjl/gundo.vim'
