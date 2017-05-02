@@ -248,6 +248,7 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
         endif
 
         Plug 'Valloric/YouCompleteMe', { 'do': join(ycm_install_command) }
+                    \ | Plug 'rdnetto/YCM-Generator', { 'branch': 'stable', 'on': 'YcmGenerateConfig'}
         let g:ycm_key_list_select_completion = ['<Down>']
         " This is the end of the YCM stuff.
 
@@ -256,7 +257,7 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
         map <silent> <F4> :GundoToggle<CR>
         imap <silent> <F4> <C-O>:GundoToggle<CR>
 
-        Plug 'kovisoft/slimv'
+        Plug 'kovisoft/slimv', { 'for': 'lisp' }
         let g:slimv_swank_cmd = '!tmux new-window -d -n REPL-SBCL "sbcl --load ~/.vim/plugged/slimv/slime/start-swank.lisp"'
     endif
 
@@ -279,43 +280,44 @@ if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     endif
 
     " vim-systemd-syntax - because I hate myself, but not that much
-    Plug 'Matt-Deacalion/vim-systemd-syntax'
+    Plug 'Matt-Deacalion/vim-systemd-syntax', { 'for': 'systemd'}
 
-    " Vim syntax file for Docker's Dockerfile and snippets for snipMate
-    Plug 'ekalinin/Dockerfile.vim'
+    " Vim syntax file for Docker's Dockerfile
+    Plug 'ekalinin/Dockerfile.vim', {'for': 'Dockerfile'}
 
     " Vim syntax for TOML
-    Plug 'cespare/vim-toml'
+    Plug 'cespare/vim-toml', {'for': 'toml'}
 
-    " Fuzzy file, buffer, mru, tag, etc finder.
+    " Fuzzy file, buffer, mru, tag, etc finder. You need this.
     Plug 'ctrlpvim/ctrlp.vim'
     let g:ctrlp_show_hidden=1
 
     " Vim syntax highlighting for .tmux.conf
-    Plug 'tmux-plugins/vim-tmux'
+    Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
                 \ | Plug 'tmux-plugins/vim-tmux-focus-events'
 
     " A better JSON plugin for Vim
-    Plug 'elzr/vim-json'
+    Plug 'elzr/vim-json', {'for': 'json'}
     " ...but disable quote concealment
     let g:vim_json_syntax_conceal = 0
 
     " Vim configuration for Rust.
-    Plug 'rust-lang/rust.vim'
+    Plug 'rust-lang/rust.vim', {'for': 'rust'}
     " Run rustfmt on buffer save
     let g:rustfmt_autosave = 1
 
     " Shows a git diff in the gutter.
     Plug 'airblade/vim-gitgutter'
 
+    " Adds file type glyphs/icons to popular Vim plugins<Paste>
     Plug 'ryanoasis/vim-devicons'
 
+    " Miscellaneous auto-load Vim scripts, and
+    " Automated tag file generation and syntax highlighting of tags in Vim
     Plug 'xolox/vim-misc'
                 \ | Plug 'xolox/vim-easytags'
     let g:easytags_async = 1
     let g:easytags_auto_highlight = 0
-
-    Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 
     " All plugins must be added before the following line.
     call plug#end()
