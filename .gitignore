@@ -2,3 +2,4 @@ spell/
 autoload/plug.vim
 plugged/
 autoload/python.vim
+.ruby-version
