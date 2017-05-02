@@ -46,6 +46,11 @@ pysetup: neovim-py2env neovim-py3env
 neovim-ruby: $(RBENV_ROOT)/versions/$(RUBY_VER)
 $(RBENV_ROOT)/versions/$(RUBY_VER):
 ifdef RBENV
+	# It'd be really nice if neovim had g:ruby_host_prog like it
+	# does for Python (see above), but it doesn't. So this target is
+	# sort of useless right now. I'm going to leave it in on the
+	# change that g:ruby_host_prog gains steam and makes it into
+	# neovim at some point.
 	$(RBENV) install -s $(RUBY_VER)
 	$(RBENV) local $(RUBY_VER)
 	gem install neovim
