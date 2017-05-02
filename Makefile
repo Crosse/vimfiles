@@ -17,13 +17,21 @@ neovim: pysetup neovim-ruby
 
 neovim-py2env: $(PYENV_ROOT)/versions/neovim2
 $(PYENV_ROOT)/versions/neovim2:
+ifdef PYENV
 	$(PYENV) install -s $(PY2_VER)
 	$(PYENV) virtualenv $(PY2_VER) neovim2
+else
+	$(error pyenv not installed, or not found in $$PATH)
+endif
 
 neovim-py3env: $(PYENV_ROOT)/versions/neovim3
 $(PYENV_ROOT)/versions/neovim3:
+ifdef PYENV
 	$(PYENV) install -s $(PY3_VER)
 	$(PYENV) virtualenv $(PY3_VER) neovim3
+else
+	$(error pyenv not installed, or not found in $$PATH)
+endif
 
 pysetup:		##@neovim Create Neovim-specific Python virtualenvs.
 pysetup: neovim-py2env neovim-py3env
@@ -35,10 +43,14 @@ pysetup: neovim-py2env neovim-py3env
 	@echo "  let g:python3_host_prog = '$(PYENV_ROOT)/versions/neovim3/bin/python'" >> $(CURDIR)/autoload/python.vim
 	@echo "endfunction" >> $(CURDIR)/autoload/python.vim
 
-neovim-ruby: $(RBENV_ROOT)/versions/neovim
-$(RBENV_ROOT)/versions/neovim:
+neovim-ruby: $(RBENV_ROOT)/versions/$(RUBY_VER)
+$(RBENV_ROOT)/versions/$(RUBY_VER):
+ifdef RBENV
 	$(RBENV) install -s $(RUBY_VER)
 	$(RBENV) local $(RUBY_VER)
+else
+	$(error rbenv not installed, or not found in $$PATH)
+endif
 
 vim-plug:		##@plugins Download vim-plug
 vim-plug: $(CURDIR)/autoload
