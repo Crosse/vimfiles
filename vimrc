@@ -109,14 +109,19 @@ function! HasColorScheme(name)
      return !empty(globpath(&runtimepath, pat))
 endfunction
 
+if g:os.is_windows
+    let s:vimdir = glob("$HOME/vimfiles")
+elseif g:os.is_unix || g:os.is_mac
+    let s:vimdir = glob("$HOME/.vim")
+else
+    echom "Unable to determine the location of your Vim home!"
+endif
+
 if has('nvim')
-    " Set python interpreters to the pyenv versions.
-    let s:pyenv_base = glob("$HOME/.pyenv/versions")
-    if !empty(s:pyenv_base)
-        let g:python_host_prog   = glob(s:pyenv_base . "/neovim2/bin/python")
-        let g:python3_host_prog  = glob(s:pyenv_base . "/neovim3/bin/python")
-    endif
     "set termguicolors
+    if !empty(glob(s:vimdir. "/autoload/python.vim"))
+        call python#init()
+    endif
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""
@@ -125,13 +130,6 @@ endif
 "                                               "
 """""""""""""""""""""""""""""""""""""""""""""""""
 
-if g:os.is_windows
-    let s:vimdir = glob("$HOME/vimfiles")
-elseif g:os.is_unix || g:os.is_mac
-    let s:vimdir = glob("$HOME/.vim")
-else
-    echom "Unable to determine the location of vim-plug!"
-endif
 if !empty(glob(s:vimdir. "/autoload/plug.vim"))
     filetype off
     let g:plug_window = 'botright new | resize 15'
