@@ -621,7 +621,7 @@ if exists("&wildignorecase")
 endif
 
 if exists ("&wildignore")
-    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.exe,*.dll,*.o,*/.deps/*,*/build/*,*/vendor/*
+    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.exe,*.dll,*.o,*/.deps/*,*/vendor/*
 endif
 
 " Enable the mouse in Visual, Insert, and Command modes
