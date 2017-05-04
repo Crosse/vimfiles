@@ -1,6 +1,7 @@
 ﻿""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim: set wildignore+=*/plugged/*:
 "
-" Copyright (c) 2009-2016 Seth Wright (seth@crosse.org)
+" Copyright (c) 2009-2017 Seth Wright (seth@crosse.org)
 "
 " Permission to use, copy, modify, and distribute this software for any
 " purpose with or without fee is hereby granted, provided that the above
@@ -60,303 +61,7 @@ if has("autocmd")
     autocmd!
 endif
 
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                                "
-"       Functions Required for this File         "
-"                                                "
-""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Determine the operating system once, so we don't have to do it over
-" and over again
-function! GetOperatingSystem()
-    let g:os = {}
-    let l:os_types = {}
-    let l:os_types.win    = ["win16", "win32", "win32unix", "win64", "win95"]
-    let l:os_types.mac    = ["mac", "macunix"]
-    let l:os_types.unix   = ["unix"]  " Note that MacVim also identifies as unix
-    let l:os_types.other  = ["amiga", "beos", "dos16", "dos32", "os2", "qnx", "vms"]
-    let l:os_types.all    = l:os_types.win + l:os_types.mac + l:os_types.unix + l:os_types.other
-
-    for g:os.fullname in l:os_types.all
-        if has(g:os.fullname)
-            break
-        endif
-    endfor
-    let g:os.name = "other"
-    let g:os.is_windows = 0
-    let g:os.is_mac = 0
-    let g:os.is_unix = 0
-    if index(l:os_types.win, g:os.fullname) >= 0
-        let g:os.name = "windows"
-        let g:os.is_windows = 1
-    else
-        "let g:os.realname = substitute(system("uname"), "\n", "", "")
-        if index(l:os_types.mac, g:os.fullname) >= 0
-            let g:os.name = "mac"
-            let g:os.is_mac = 1
-        elseif index(l:os_types.unix, g:os.fullname) >= 0
-            let g:os.name = "unix"
-            let g:os.is_unix = 1
-        endif
-    endif
-endfunction
-call GetOperatingSystem()
-
-function! HasColorScheme(name)
-     let pat = "colors/" . a:name . ".vim"
-     return !empty(globpath(&runtimepath, pat))
-endfunction
-
-if g:os.is_windows
-    let s:vimdir = glob("$HOME/vimfiles")
-elseif g:os.is_unix || g:os.is_mac
-    let s:vimdir = glob("$HOME/.vim")
-else
-    echom "Unable to determine the location of your Vim home!"
-endif
-
-if has('nvim')
-    "set termguicolors
-    if !empty(glob(s:vimdir. "/autoload/python.vim"))
-        call python#init()
-    endif
-endif
-
-"""""""""""""""""""""""""""""""""""""""""""""""""
-"                                               "
-"           vim-plug and Vim plugins            "
-"                                               "
-"""""""""""""""""""""""""""""""""""""""""""""""""
-
-if !empty(glob(s:vimdir. "/autoload/plug.vim"))
-    filetype off
-    let g:plug_window = 'botright new | resize 15'
-
-    call plug#begin()
-
-    " Load plugins here.
-
-    " lean & mean status/tabline for vim that's light as air
-    Plug 'vim-airline/vim-airline'
-                \ | Plug 'vim-airline/vim-airline-themes'
-    let g:airline#extensions#tabline#enabled = 1
-
-    " Set custom symbols to use.
-    if !exists("g:airline_symbols")
-        let g:airline_symbols = {}
-    endif
-
-    " If using a font with Powerline support, these will look fantastic.
-    " If not, get ready for the Unicode box-o-wtf all over the place.
-    " Fonts with support for the Powerline glyphs include Source Code
-    " Pro and Fira Code.
-    let g:airline_left_alt_sep = ''
-    let g:airline_left_sep = ''
-    let g:airline_right_alt_sep = ''
-    let g:airline_right_sep = ''
-    let g:airline_symbols.branch = ''
-    let g:airline_symbols.linenr = ''
-    let g:airline_symbols.paste = '[paste]'
-    let g:airline_symbols.readonly = ''
-    let g:airline_symbols.whitespace = 'Ξ'
-
-    " a Git wrapper so awesome, it should be illegal
-    Plug 'tpope/vim-fugitive'
-
-    " A vim plugin to display the indention levels with thin vertical lines
-    Plug 'Yggdroot/indentLine'
-
-    " Go development plugin for Vim
-    Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
-    let g:go_fmt_command = "goimports"
-    let g:go_fmt_autosave = 1
-    let g:go_auto_type_info = 1
-    let g:go_highlight_functions = 1
-    let g:go_highlight_methods = 1
-    let g:go_highlight_fields = 1
-    let g:go_highlight_types = 1
-    let g:go_highlight_operators = 1
-    let g:go_highlight_interfaces = 1
-    let g:go_highlight_structs = 1
-    let g:go_highlight_build_constraints = 1
-    let g:go_list_type = "quickfix"
-    au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
-
-    " Syntax checking hacks for vim
-    Plug 'scrooloose/syntastic'
-    let g:syntastic_go_checkers = ['golint', 'govet', 'go', 'errcheck']
-    let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 1
-    let g:syntastic_check_on_open = 1
-    let g:syntastic_check_on_wq = 0
-    " I only want to use one checker for Python, and I want to use them
-    " in this order. Find the first available one and use that
-    " exclusively. (Maybe this isn't needed.)
-    for pychecker in ['flake8', 'pyflake', 'pylint']
-        if executable(pychecker)
-            let g:syntastic_python_checkers = [pychecker]
-            break
-        endif
-    endfor
-
-    " A tree explorer plugin for Vim.
-    " ...and a git plugin for NERDTree.
-    Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-                \ | Plug 'Xuyuanp/nerdtree-git-plugin'
-
-    " Exit Vim when NERDTree is the only window open.
-    " autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-    " Open NERDTree automatically when Vim starts.
-    "autocmd VimEnter * if exists("loaded_nerd_tree") | NERDTree | endif
-    "autocmd StdinReadPre * let s:std_in=1
-    "autocmd VimEnter * if (exists("loaded_nerd_tree") && argc() == 0 && !exists("s:std_in")) | NERDTree | endif
-
-    " Toggle NERDTree using Ctrl-N
-    map <C-N> :NERDTreeToggle<CR>
-
-    " Plugins that require Python support hide here.
-    if has('python') || has('python3')
-        " YouCompleteMe, a code-completion engine for Vim
-        " The following if-statements build up a command line depending
-        " on whether various things are installed. For instance, if
-        " msbuild is installed, then instruct YCM's installer to build
-        " the OmniSharp completer.
-        if g:os.is_windows
-            let ycm_install_command = ['install.py']
-        else
-            let ycm_install_command = ['./install.py']
-        endif
-        call add(ycm_install_command, '--clang-completer')
-
-        if executable('msbuild.exe') || executable('xbuild')
-            call add(ycm_install_command, '--omnisharp-completer')
-        endif
-
-        if executable('go')
-            call add(ycm_install_command, '--gocode-completer')
-        endif
-
-        if executable('node') && executable('npm')
-            call add(ycm_install_command, '--tern-completer')
-        endif
-
-        if executable('cargo')
-            call add(ycm_install_command, '--racer-completer')
-        endif
-
-        Plug 'Valloric/YouCompleteMe', { 'do': join(ycm_install_command) }
-                    \ | Plug 'rdnetto/YCM-Generator', { 'branch': 'stable', 'on': 'YcmGenerateConfig'}
-        let g:ycm_key_list_select_completion = ['<Down>']
-        " This is the end of the YCM stuff.
-
-        " Visualize your Vim undo tree.
-        Plug 'sjl/gundo.vim'
-        map <silent> <F4> :GundoToggle<CR>
-        imap <silent> <F4> <C-O>:GundoToggle<CR>
-
-        Plug 'kovisoft/slimv', { 'for': 'lisp' }
-        let g:slimv_swank_cmd = '!tmux new-window -d -n REPL-SBCL "sbcl --load ~/.vim/plugged/slimv/slime/start-swank.lisp"'
-    endif
-
-    if executable('ctags') || executable('exctags')
-        " Vim plugin that displays tags in a window, ordered by scope
-        " https://github.com/majutsushi/tagbar
-        Plug 'majutsushi/tagbar'
-        nmap <leader>t :TagbarToggle<CR>
-
-        " tagbar relies on Exuberant Ctags. If 'ctags' is not this (as
-        " is the case on OSX and other BSD variants), then invoking
-        " tagbar will fail with an error explaining this.
-        "
-        " With that in mind, use exctags if it exists. (On OSX, this is
-        " installed by pkgsrc.) Other versions of ctags with different
-        " names could be handled similarly.
-        if executable('exctags')
-            let g:tagbar_ctags_bin = 'exctags'
-        endif
-    endif
-
-    " vim-systemd-syntax - because I hate myself, but not that much
-    Plug 'Matt-Deacalion/vim-systemd-syntax', { 'for': 'systemd'}
-
-    " Vim syntax file for Docker's Dockerfile
-    Plug 'ekalinin/Dockerfile.vim', {'for': 'Dockerfile'}
-
-    " Vim syntax for TOML
-    Plug 'cespare/vim-toml', {'for': 'toml'}
-
-    " Fuzzy file, buffer, mru, tag, etc finder. You need this.
-    Plug 'ctrlpvim/ctrlp.vim'
-    let g:ctrlp_show_hidden=1
-
-    " Vim syntax highlighting for .tmux.conf
-    Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
-                \ | Plug 'tmux-plugins/vim-tmux-focus-events'
-
-    " A better JSON plugin for Vim
-    Plug 'elzr/vim-json', {'for': 'json'}
-    " ...but disable quote concealment
-    let g:vim_json_syntax_conceal = 0
-
-    " Vim configuration for Rust.
-    Plug 'rust-lang/rust.vim', {'for': 'rust'}
-    " Run rustfmt on buffer save
-    let g:rustfmt_autosave = 1
-
-    " Shows a git diff in the gutter.
-    Plug 'airblade/vim-gitgutter'
-
-    " Adds file type glyphs/icons to popular Vim plugins<Paste>
-    Plug 'ryanoasis/vim-devicons'
-
-    " Miscellaneous auto-load Vim scripts, and
-    " Automated tag file generation and syntax highlighting of tags in Vim
-    Plug 'xolox/vim-misc'
-                \ | Plug 'xolox/vim-easytags'
-    let g:easytags_async = 1
-    let g:easytags_auto_highlight = 0
-
-    " All plugins must be added before the following line.
-    call plug#end()
-
-    " Brief help
-    " :PlugStatus        - Check the status of plugins
-    " :PlugInstall       - install plugins
-    " :PlugUpdate        - update plugins
-    " :PlugUpgrade       - update vim-plug itself
-    " :PlugClean(!)      - confirm (or auto-approve) removal of unused plugins
-    "
-    " see https://github.com/junegunn/vim-plug for more information.
-endif
-
 filetype plugin indent on
-
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""
-"                                               "
-"     Colorschemes, Fonts, and Window Sizes     "
-"                                               "
-"""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Set some variables we'll use a few times
-" Note that these are just my preferences; substitute
-" whatever works for you if you don't like them.
-"
-" A list of color schemes to use, in the order you want to use them
-let s:schemes = ["molokai", "default", "solarized", "torte", "desert", "koehler", "slate"]
-
-" Fonts section.  First, create a list of desired fonts for GUI vims.
-let s:fonts = ["Source Code Pro", "Consolas", "Inconsolata", "Lucida Console", "Monospace"]
-let s:win_font_size = "11"
-let s:mac_font_size = "15"
-let s:unix_font_size = "11"
-
-let s:print_fonts = s:fonts
-let s:print_font_size = "h8"
 
 " GVim default window size
 if has("gui_running") && !exists("g:loaded_WindowSizes")
@@ -368,78 +73,12 @@ if has("gui_running") && !exists("g:loaded_WindowSizes")
     let g:loaded_WindowSizes = 1
 endif
 
-if g:os.is_windows
-    " Windows-specific settings
-    behave mswin
-    source $VIMRUNTIME/mswin.vim
-    let s:font_size=s:win_font_size
-
-    if has("gui_running") && exists("&renderoptions")
-        if g:os.is_windows
-            " Use DirectX to draw glyphs on Windows. This is new in Vim 8.
-            set renderoptions=type:directx
-        endif
-    endif
-elseif g:os.is_mac
-    " MacVim-specific settings
-    let s:font_size=s:mac_font_size
-
-    " Enable ligatures in fonts that support them.
-    " This only works for MacVim currently.
-    " Examples of good fonts for coding that use ligatures include:
-    "   - Fira Code (https://github.com/tonsky/FiraCode)
-    "   - Hasklig (https://github.com/i-tu/Hasklig)
-    " See https://medium.com/larsenwork-andreas-larsen/ligatures-coding-fonts-5375ab47ef8e
-    " for more information on why ligatures can be useful for coding fonts.
-    if has("gui_running") && exists("&macligatures")
-        set macligatures
-    endif
-else
-    " Unix-specific settings for everthing else.
-    let s:font_size=s:unix_font_size
-endif
-
 if has("gui_running")
-    " The font to use for GVim/MacVim
-    let s:gui_fonts = []
-    for s:font in s:fonts
-        let s:gui_fonts += [s:font . " " . s:font_size]
-        let s:gui_fonts += [substitute(s:font, " ", "_", "g") . ":h" . s:font_size]
-    endfor
-    let &guifont = join(s:gui_fonts, ",")
-
     " Turn off the toolbar
     set guioptions-=T
 endif
 
-" Set a color scheme, only if it is found in the runtimepath.
-for s:scheme in s:schemes
-    if HasColorScheme(s:scheme)
-        exec "colorscheme " . s:scheme
-        break
-    endif
-endfor
-
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                                "
-"                    Printing                    "
-"                                                "
-""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Set some printing options.
-" Left/Right/Top margins:  0.5in (1pt = 1/72 inch)
-" Bottom margin:  1in
-" Print line numbers
-" Paper size:  letter (default is A4)
-set printoptions=left:27pt,right:54pt,top:36pt,bottom:36pt,number:y,paper:letter,header:3
-set printheader=%<%F%=\ [Page\ %N]
-
-" Use the same fonts for printing as for the GUI.
-let &printfont = join(s:print_fonts, ":" . s:print_font_size . ",")
-
-
+call crosse#init()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 "                                                "
@@ -614,7 +253,11 @@ if exists("&wildignorecase")
 endif
 
 if exists ("&wildignore")
-    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.exe,*.dll,*.o,*/.deps/*,*/vendor/*
+    set wildignore+=*.pyc,*.bak,*.class,*.orig,*~,*.swp,*.swo
+    set wildignore+=*.so,*.dll,*.dylib,*.o,*.exe
+    set wildignore+=.git,.hg,.bzr,.svn,CVS
+    set wildignore+=*/build/*,*/tmp/*,*/vendor/*,*/target/*
+    set wildignore+=*.zip,*/.deps/*,
 endif
 
 " Enable the mouse in Visual, Insert, and Command modes
@@ -663,7 +306,15 @@ if has("multi_byte")
 
     " Change the characters used in list mode to some utf-8 characters,
     " if available.
-    set listchars=tab:»·,eol:¬
+    set listchars=eol:¬
+    set listchars+=extends:❯
+    set listchars+=precedes:❮
+    set listchars+=trail:·
+    set listchars+=nbsp:·
+    set listchars+=tab:»·
+
+
+    set showbreak=↪
 endif
 
 " Keep the cursor in the same column, if possible, when using C-U and
@@ -707,6 +358,8 @@ set hidden
 " Set the terminal title, if possible.
 set title
 
+" Open splits to the right or below the current window for vsp/sp, respectively.
+set splitbelow splitright
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -729,94 +382,7 @@ function! QuickfixToggle()
 endfunction
 nnoremap <leader>q :call QuickfixToggle()<CR>
 
-function! CycleColorScheme(dir)
-    if !exists("g:schemes") || len(g:schemes) == 0
-        let g:schemes = []
-        for f in split(globpath(&runtimepath, "colors/*.vim"), "\n")
-            let g:schemes = g:schemes + [fnamemodify(f, ":t:r")]
-        endfor
-    endif
-    if a:dir == 0
-        let s:schemes = g:schemes
-    else
-        let s:schemes = reverse(copy(g:schemes))
-    endif
-    for f in s:schemes
-        if exists("s:found")
-            exec "colorscheme " . f
-            unlet s:found
-            break
-        endif
-        if f == g:colors_name
-            let s:found = 1
-        endif
-    endfor
-endfunction
-map <leader><Right> :call CycleColorScheme(0)<CR>
-map <leader><Left> :call CycleColorScheme(1)<CR>
 
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                                "
-"                 Key Bindings                   "
-"                                                "
-""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Stay in visual mode when indenting
-vnoremap > >gv
-vnoremap < <gv
-
-" have the usual indentation keystrokes still work in visual mode:
-vmap <C-T> >
-vmap <C-D> <LT>
-vmap <Tab> <C-T>
-vmap <S-Tab> <C-D>
-
-" have Y behave analogously to D and C rather than to dd and cc (which is
-" already done by yy):
-noremap Y y$
-
-" Copy (Yank) selected text to the OS clipboard
-noremap <leader>y "+y
-" Copy an entire line to the OS clipboard
-noremap <leader>Y "+yy
-
-" Paste from the OS clipboard
-noremap <leader>p "+p
-noremap <leader>P "+P
-
-" Toggle List mode using F5.  Like 'Show Codes' for WordPerfect.
-map <F5> :set list!<CR>:set list?<CR>
-imap <F5> <C-O>:set list!<CR><C-O>:set list?<CR>
-
-" Have Control-Enter do the same as 'O'
-" ...that is, insert a line above the current line.
-" This comes from Visual Studio key bindings.
-" Note that this doesn't seem to work in anything other than GVim.
-imap <C-Enter> <Esc>O
-
-" Remap PageUp and PageDown such that the keys act like Control-U and
-" Control-D, respectively.
-map <PageUp> <C-U>
-map <PageDown> <C-D>
-imap <PageUp> <C-O><C-U>
-imap <PageDown> <C-O><C-D>
-
-" Map/remap Control-J and Control-K to cycle left and right through tabs
-map <C-J> :bnext<CR>
-map <C-K> :bprevious<CR>
-imap <C-J> <C-O>:bnext<CR>
-imap <C-K> <C-O>:bprevious<CR>
-
-" Use <F6> to call :make
-map <F6> :make<CR>
-imap <F6> <C-O>:make<CR>
-
-" Strip all trailing whitespace in the current file
-nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
-
-" Open a new vertical split and switch over to it.
-nnoremap <leader>w :vertical botright new<CR>
 
 
 
