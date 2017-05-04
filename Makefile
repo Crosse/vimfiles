@@ -39,10 +39,10 @@ pysetup: neovim-py2env neovim-py3env
 	$(PYENV_ROOT)/versions/neovim3/bin/pip install neovim flake8
 	ln -svf $(PYENV_ROOT)/versions/neovim3/bin/flake8 ${HOME}/bin/flake8
 	@mkdir -p $(CURDIR)/autoload/crosse
-	@echo "function! crosse#python#load() abort" > $(CURDIR)/autoload/crosse/python.vim
-	@echo "  let g:python_host_prog = '$(PYENV_ROOT)/versions/neovim2/bin/python'" >> $(CURDIR)/autoload/python.vim
-	@echo "  let g:python3_host_prog = '$(PYENV_ROOT)/versions/neovim3/bin/python'" >> $(CURDIR)/autoload/python.vim
-	@echo "endfunction" >> $(CURDIR)/autoload/python.vim
+	echo "function! crosse#python#load() abort" > $(CURDIR)/autoload/crosse/python.vim
+	echo "  let g:python_host_prog = '$(PYENV_ROOT)/versions/neovim2/bin/python'" >> $(CURDIR)/autoload/crosse/python.vim
+	echo "  let g:python3_host_prog = '$(PYENV_ROOT)/versions/neovim3/bin/python'" >> $(CURDIR)/autoload/crosse/python.vim
+	echo "endfunction" >> $(CURDIR)/autoload/crosse/python.vim
 
 neovim-ruby: $(RBENV_ROOT)/versions/$(RUBY_VER)
 $(RBENV_ROOT)/versions/$(RUBY_VER):

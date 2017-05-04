@@ -1,6 +1,6 @@
-spell/
+.netrwhist
+.ruby-version
+autoload/crosse/python.vim
 autoload/plug.vim
 plugged/
-autoload/python.vim
-.ruby-version
-.netrwhist
+spell/
