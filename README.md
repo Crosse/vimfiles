@@ -4,9 +4,16 @@
 
 1. Clone this repo to `~/.vim`:
 
-    git clone git@github.com/Crosse/vimfiles.git ${HOME}/.vim
+    ```console
+    $ git clone git@github.com/Crosse/vimfiles.git ${HOME}/.vim
+    ```
 
 1. Use `make build` to build everything.
+
+
+## Usage
+
+Run `make` or `make help` to see all the targets the Makefile provides.
 
 ```console
 usage: make [target]
