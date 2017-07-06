@@ -106,10 +106,10 @@ if has("syntax") && (&t_Co > 2 || has("gui_running"))
     syntax on
 
     " This sets up a 'gutter' line at 76 characters.
-    if exists("+colorcolumn")
-        set colorcolumn=76
-        highlight ColorColumn ctermbg=DarkCyan guibg=DarkCyan
-    endif
+"    if exists("+colorcolumn")
+"        set colorcolumn=76
+"        highlight ColorColumn ctermbg=DarkCyan guibg=DarkCyan
+"    endif
 
     if has("extra_search")
         " Turn on search highlighting
