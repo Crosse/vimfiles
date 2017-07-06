@@ -4,12 +4,12 @@ function! crosse#init() abort
     let l:order = [
                 \ 'osdetect',
                 \ 'python',
-                \ 'colors',
                 \ 'fonts',
                 \ 'printing',
                 \ 'mappings',
                 \ 'win',
                 \ 'plugins',
+                \ 'colors',
                 \ ]
 
     for l:plugin_name in l:order

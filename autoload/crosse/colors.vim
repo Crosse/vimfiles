@@ -33,9 +33,7 @@ endfunction
 function! crosse#colors#load() abort
     " Set a color scheme, only if it is found in the runtimepath.
     for s:scheme in s:schemes
-        if crosse#colors#has_colorscheme(s:scheme)
-            exec "colorscheme " . s:scheme
-            break
-        endif
+        exec "colorscheme " . s:scheme
+        break
     endfor
 endfunction
