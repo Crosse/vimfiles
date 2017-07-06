@@ -203,6 +203,18 @@ function! crosse#plugins#load() abort
     " Adds file type glyphs/icons to popular Vim plugins<Paste>
     Plug 'ryanoasis/vim-devicons'
 
+    Plug 'xolox/vim-misc'
+                \ | Plug 'xolox/vim-easytags'
+
+    let g:easytags_async = 1
+    let g:easytags_auto_highlight = 0
+    let g:easytags_autorecurse = 0
+    let g:easytags_dynamic_files = 1
+    let g:easytags_by_filetype = '~/.cache/nvim/tags/by-filetype'
+
+    " Base16 theme(s) for Vim.
+    Plug 'chriskempson/base16-vim'
+
     " All plugins must be added before the following line.
     call plug#end()
 
