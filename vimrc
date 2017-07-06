@@ -260,10 +260,11 @@ if exists ("&wildignore")
     set wildignore+=*.zip,*/.deps/*,
 endif
 
-" Enable the mouse in Visual, Insert, and Command modes
-" This can be weird sometimes.
+" Enable the mouse in all modes. This can be weird sometimes.
 if has("mouse")
-    set mouse=vic
+    set mouse=a
+    " ...or just Visual, Insert, and Command modes.
+    "set mouse=vic
 endif
 
 " enable spell-checking, if we have it.
