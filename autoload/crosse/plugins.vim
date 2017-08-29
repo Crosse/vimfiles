@@ -145,6 +145,9 @@ function! crosse#plugins#load() abort
         let g:ycm_autoclose_preview_window_after_insertion = 1
         " This is the end of the YCM stuff.
 
+        " EditorConfig plugin for Vim (see http://editorconfig.org)
+        Plug 'editorconfig/editorconfig-vim'
+
         " Visualize your Vim undo tree.
         Plug 'sjl/gundo.vim'
         map <silent> <F4> :GundoToggle<CR>
