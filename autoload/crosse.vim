@@ -10,6 +10,7 @@ function! crosse#init() abort
                 \ 'win',
                 \ 'plugins',
                 \ 'colors',
+                \ 'autocommands',
                 \ ]
 
     for l:plugin_name in l:order

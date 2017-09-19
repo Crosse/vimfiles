@@ -220,6 +220,10 @@ function! crosse#plugins#load() abort
     " Base16 theme(s) for Vim.
     Plug 'chriskempson/base16-vim'
 
+    Plug 'kien/rainbow_parentheses.vim'
+    nnoremap <F7> :RainbowParenthesesToggleAll<CR>
+    inoremap <F7> <C-O>:RainbowParenthesesToggleAll<CR>
+
     " All plugins must be added before the following line.
     call plug#end()
 

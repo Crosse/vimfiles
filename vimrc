@@ -37,6 +37,7 @@
 "   F4 - toggle Gundo
 "   F5 - toggle list mode; i.e., 'Show Codes'
 "   F6 - execute 'make' in the current directory
+"   F7 - toggle Rainbow Parentheses
 "   F8 - toggle Tagbar (also <leader>t)
 "   F9 - toggle nearest fold open and closed
 "   F10 - toggle the fold column

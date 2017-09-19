@@ -1,10 +1,7 @@
-"function! crosse#autocommands#load() abort
-"    augroup crosse
-"        autocmd!
-"        if v:vim_did_enter
-"            call crosse#setup#load()
-"        else
-"            autocmd VimEnter * call crosse#setup#load()
-"        endif
-"    augroup END
-"endfunc
+function! crosse#autocommands#load() abort
+    au VimEnter * RainbowParenthesesToggleAll
+    au Syntax * RainbowParenthesesLoadRound
+    au Syntax * RainbowParenthesesLoadSquare
+    au Syntax * RainbowParenthesesLoadBraces
+    au Syntax * RainbowParenthesesLoadChevrons
+endfunc
