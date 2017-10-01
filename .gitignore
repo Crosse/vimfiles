@@ -1,6 +1,8 @@
 .netrwhist
 .ruby-version
 autoload/crosse/python.vim
+autoload/gocomplete.vim
 autoload/plug.vim
+ftplugin/go/
 plugged/
 spell/
