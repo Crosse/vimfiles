@@ -361,7 +361,7 @@ set hidden
 set title
 
 " Open splits to the right or below the current window for vsp/sp, respectively.
-set splitbelow splitright
+set nosplitbelow splitright
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
