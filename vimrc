@@ -96,9 +96,6 @@ set visualbell
 " show matching brackets / parentheses
 set showmatch
 
-" show which mode you're currently in.
-set showmode
-
 " Disable visual line-wrapping.  This does not prevent hard-wraps.
 set nowrap
 
@@ -162,7 +159,6 @@ set shortmess+=r
 if has("cmdline_info")
     " display the current mode and partially-typed commands in the status
     " line:
-    set showmode
     set showcmd
     " Always display the current cursor position in the lower right corner
     " of the Vim window.  Note that 'statusline' (below) takes precendence
