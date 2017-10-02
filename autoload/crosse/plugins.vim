@@ -143,11 +143,11 @@ function! crosse#plugins#load() abort
     nnoremap <F7> :RainbowParenthesesToggleAll<CR>
     inoremap <F7> <C-O>:RainbowParenthesesToggleAll<CR>
 
-    Plug 'jsfaint/gen_tags.vim', { 'on': 'GenGTAGS' }       " Async plugin for vim and neovim to ease the use of ctags/gtags
-    let g:loaded_gentags#ctags = 1                          " Disable ctags support.
-    let g:gen_tags#ctags_use_cache_dir = 1                  " Store tags files in SCM dir or ~/.cache
-    let g:gen_tags#gtags_split = 'v'                        " Split vertically on find
-    let g:gen_tags#gtags_auto_gen = 1                       " Auto-generate gtags if in an SCM repo
+    Plug 'Crosse/gen_tags.vim', { 'branch': 'update' }      " Async plugin for vim and neovim to ease the use of ctags/gtags.
+    let g:loaded_gentags#ctags = 1                          " If true, Disable ctags support.
+    let g:gen_tags#use_cache_dir = 0                        " If false(??), store tags files in SCM dir or ~/.cache.
+    let g:gen_tags#gtags_split = 'v'                        " Split vertically on find.
+    let g:gen_tags#gtags_auto_gen = 0                       " if true, Auto-generate gtags if in an SCM repo.
 
 
     """""""""""""""""""""""""""""""""""""""""""""""""
