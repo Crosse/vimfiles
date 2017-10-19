@@ -163,6 +163,10 @@ function! crosse#plugins#load() abort
     Plug 'cespare/vim-toml', {'for': 'toml'}                " Vim syntax for TOML
     Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}           " Vim syntax highlighting for .tmux.conf
 
+    Plug 'tpope/vim-markdown', {'for': ['markdown', 'COMMIT_EDITMSG', 'PULLREQ_EDITMSG']}
+    let g:markdown_syntax_conceal = 0
+    let g:markdown_fenced_languages = [ 'html', 'python', 'bash=sh', 'sh', 'vim', 'viml=vim' ]
+
 
     """""""""""""""""""""""""""""""""""""""""""""""""
     "                                               "
@@ -219,7 +223,7 @@ function! crosse#plugins#load() abort
     endif
 
     Plug 'tmux-plugins/vim-tmux-focus-events'               " Make terminal vim and tmux work better together.
-    Plug 'roxma/vim-tmux-clipboard'                         " seamless integration for vim and tmux's clipboard
+    Plug 'roxma/vim-tmux-clipboard'                         " seamless integration for vim and tmux's clipboard.
 
 
     """""""""""""""""""""""""""""""""""""""""""""""""
