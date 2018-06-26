@@ -43,19 +43,19 @@ function! crosse#mappings#load() abort
 
     " Remap PageUp and PageDown such that the keys act like Control-U and
     " Control-D, respectively.
-    map <PageUp> <C-U>
-    map <PageDown> <C-D>
-    imap <PageUp> <C-O><C-U>
+    map  <PageUp>   <C-U>
+    map  <PageDown> <C-D>
+    imap <PageUp>   <C-O><C-U>
     imap <PageDown> <C-O><C-D>
 
     " Map/remap Control-J and Control-K to cycle left and right through tabs
-    map <C-J> :bnext<CR>
-    map <C-K> :bprevious<CR>
+    map  <C-J> :bnext<CR>
+    map  <C-K> :bprevious<CR>
     imap <C-J> <C-O>:bnext<CR>
     imap <C-K> <C-O>:bprevious<CR>
 
     " Use <F6> to call :make
-    map <F6> :make<CR>
+    map  <F6> :make<CR>
     imap <F6> <C-O>:make<CR>
 
     " Strip all trailing whitespace in the current file
@@ -63,4 +63,7 @@ function! crosse#mappings#load() abort
 
     " Open a new vertical split and switch over to it.
     nnoremap <leader>w :vertical botright new<CR>
+
+    " Close the location window.
+    nnoremap <leader>l :lclose<CR>
 endfunction
