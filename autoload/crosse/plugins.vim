@@ -56,11 +56,16 @@ function! crosse#plugins#load() abort
         nnoremap <silent> <leader>c :call LanguageClient_contextMenu()<CR>
     endif
 
-    if has('nvim') && (has('python') || has('python3'))
+    if (has('nvim') || v:version >= 800) && (has('python') || has('python3'))
         " A number of plugins provide information that
         " nvim-completion-manager can consume.
         Plug 'roxma/nvim-completion-manager'
                     \ | Plug 'Shougo/neco-vim', { 'for': 'vim' }
+
+        if !has('nvim')
+            Plug 'roxma/vim-hug-neovim-rpc'
+            Plug 'roxma/nvim-yarp'
+        endif
     endif
 
     " The de facto Go plugin for Vim.
