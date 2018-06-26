@@ -40,8 +40,8 @@ function! crosse#plugins#load() abort
     " standard way for any client (Vim, Emacs,      "
     " VSCode, etc.) to use.                         "
     """""""""""""""""""""""""""""""""""""""""""""""""
-    if has('nvim')
-        Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+    if has('nvim') || (v:version >= 800 && has('job') && has('channel'))
+        Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': '/bin/sh install.sh' }
                     \ | Plug 'Shougo/echodoc.vim'           " Print documents in echo area.
 
         " The Language Client needs to know which server to run for each
