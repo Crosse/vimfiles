@@ -139,9 +139,11 @@ function! crosse#plugins#load() abort
         endif
     endif
 
-    Plug 'kien/rainbow_parentheses.vim'                     " Better Rainbow Parentheses
-    nnoremap <F7> :RainbowParenthesesToggleAll<CR>
-    inoremap <F7> <C-O>:RainbowParenthesesToggleAll<CR>
+    Plug 'luochen1990/rainbow'
+    let g:rainbow_active = 1
+
+    nnoremap <F7> :RainbowToggle<CR>
+    inoremap <F7> <C-O>:RainbowToggle<CR>
 
     Plug 'Crosse/gen_tags.vim', { 'branch': 'update' }      " Async plugin for vim and neovim to ease the use of ctags/gtags.
     let g:loaded_gentags#ctags = 1                          " If true, Disable ctags support.
