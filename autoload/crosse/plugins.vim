@@ -48,9 +48,12 @@ function! crosse#plugins#load() abort
         " language you want to support.
         let g:LanguageClient_serverCommands = {
                     \ 'python': [ 'pyls' ],
-                    \ 'rust': [ 'rustup', 'run', 'nightly', 'rls' ],
+                    \ 'rust': [ 'rustup', 'run', 'stable', 'rls' ],
                     \ }
         let g:LanguageClient_autoStart = 1
+        let g:LanguageClient_changeThrottle = 0.5
+        let g:LanguageClient_diagnosticsList = "quickfix"
+        nnoremap <silent> <leader>c :call LanguageClient_contextMenu()<CR>
     endif
 
     if has('nvim') && (has('python') || has('python3'))
@@ -61,10 +64,10 @@ function! crosse#plugins#load() abort
     endif
 
     " The de facto Go plugin for Vim.
-    Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
+    Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
     let g:go_fmt_command = "goimports"
     let g:go_fmt_autosave = 1
-    let g:go_auto_type_info = 1
+"    let g:go_auto_type_info = 1
     let g:go_highlight_functions = 1
     let g:go_highlight_methods = 1
     let g:go_highlight_fields = 1
@@ -75,6 +78,7 @@ function! crosse#plugins#load() abort
     let g:go_highlight_build_constraints = 1
     let g:go_list_type = "quickfix"
     au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+    au FileType go setlocal noexpandtab shiftwidth=8
 
     " Ideally, using a Go language server would be the best option.
     " However, the current Go LS doesn't support completion; instead,
@@ -117,6 +121,8 @@ function! crosse#plugins#load() abort
         endif
     endfor
 
+    let g:syntastic_python_flake8_args='--ignore=E501'
+
     Plug 'editorconfig/editorconfig-vim'                    " EditorConfig plugin for Vim (see http://editorconfig.org)
     Plug 'tpope/vim-fugitive'                               " a Git wrapper so awesome, it should be illegal
     Plug 'airblade/vim-gitgutter'                           " Shows a git diff in the gutter.
@@ -124,8 +130,12 @@ function! crosse#plugins#load() abort
     if executable('ctags') || executable('exctags')
         " Vim plugin that displays tags in a window, ordered by scope
         " https://github.com/majutsushi/tagbar
-        Plug 'majutsushi/tagbar', { 'on': [ 'Tagbar', 'TagbarToggle', 'TagbarOpen' ] }
+        "Plug 'majutsushi/tagbar', { 'on': [ 'Tagbar', 'TagbarToggle', 'TagbarOpen' ] }
+        Plug 'majutsushi/tagbar'
         nmap <leader>t :TagbarToggle<CR>
+        nmap <F8> :TagbarToggle<CR>
+
+        let g:tagbar_autoclose=1
 
         " tagbar relies on Exuberant Ctags. If 'ctags' is not this (as
         " is the case on OSX and other BSD variants), then invoking
@@ -150,6 +160,8 @@ function! crosse#plugins#load() abort
     let g:gen_tags#use_cache_dir = 0                        " If false(??), store tags files in SCM dir or ~/.cache.
     let g:gen_tags#gtags_split = 'v'                        " Split vertically on find.
     let g:gen_tags#gtags_auto_gen = 0                       " if true, Auto-generate gtags if in an SCM repo.
+
+    Plug 'jaxbot/semantic-highlight.vim'                    " Semantic Highlighting for Vim
 
 
     """""""""""""""""""""""""""""""""""""""""""""""""
@@ -217,6 +229,9 @@ function! crosse#plugins#load() abort
 
     Plug 'ctrlpvim/ctrlp.vim'                               " Fuzzy file, buffer, mru, tag, etc finder. You need this.
     let g:ctrlp_show_hidden=1                               " Show hidden files and folders
+    let g:ctrlp_custom_ignore = {
+                \ 'file': 'Cargo\.lock'
+                \}
 
     if has('python') || has('python3')
         Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }       " Visualize your Vim undo tree.
@@ -226,6 +241,7 @@ function! crosse#plugins#load() abort
 
     Plug 'tmux-plugins/vim-tmux-focus-events'               " Make terminal vim and tmux work better together.
     Plug 'roxma/vim-tmux-clipboard'                         " seamless integration for vim and tmux's clipboard.
+    Plug 'jremmen/vim-ripgrep'                              " Use RipGrep in Vim and display results in a quickfix list
 
 
     """""""""""""""""""""""""""""""""""""""""""""""""
