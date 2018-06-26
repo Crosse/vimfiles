@@ -25,10 +25,10 @@ pysetup: neovim-py2env neovim-py3env
 	@echo "endfunction" >> $(CURDIR)/autoload/crosse/python.vim
 
 neovim-py2env: |$(PYENV_PATH)/versions/$(PY2_VER) pyenv-virtualenv $(PYENV_PATH)/versions/neovim2
-	@$(PYENV_PATH)/versions/neovim2/bin/pip install neovim
+	@$(PYENV_PATH)/versions/neovim2/bin/pip install neovim python-language-server
 
 neovim-py3env: |$(PYENV_PATH)/versions/$(PY3_VER) pyenv-virtualenv $(PYENV_PATH)/versions/neovim3
-	@$(PYENV_PATH)/versions/neovim3/bin/pip install neovim flake8
+	@$(PYENV_PATH)/versions/neovim3/bin/pip install neovim flake8 python-language-server
 	@ln -svf $(PYENV_PATH)/versions/neovim3/bin/flake8 ${HOME}/bin/flake8
 
 $(PYENV_PATH)/versions/neovim2:
