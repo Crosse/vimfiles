@@ -255,7 +255,7 @@ if exists ("&wildignore")
     set wildignore+=*.pyc,*.bak,*.class,*.orig,*~,*.swp,*.swo
     set wildignore+=*.so,*.dll,*.dylib,*.o,*.exe
     set wildignore+=.git,.hg,.bzr,.svn,CVS
-    set wildignore+=*/build/*,*/tmp/*,*/vendor/*,*/target/*
+    set wildignore+=*/build/*,*/tmp/*,*/vendor/*,*/target/*,*/rpmbuild/*
     set wildignore+=*.zip,*/.deps/*,
 endif
 
