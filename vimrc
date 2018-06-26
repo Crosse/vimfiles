@@ -79,6 +79,8 @@ if has("gui_running")
     set guioptions-=T
 endif
 
+let mapleader = ","
+
 call crosse#init()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
