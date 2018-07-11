@@ -6,3 +6,4 @@ autoload/plug.vim
 ftplugin/go/
 plugged/
 spell/
+.Pipfile.installed

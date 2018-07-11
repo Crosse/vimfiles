@@ -5,10 +5,10 @@ name = "pypi"
 
 [packages]
 neovim = "*"
-python-language-server = "*"
+python-language-server = {version = "*", extras = ["all"]}
 flake8 = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.6"
+python_version = "3.4"
