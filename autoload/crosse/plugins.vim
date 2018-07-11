@@ -47,7 +47,7 @@ function! crosse#plugins#load() abort
         " The Language Client needs to know which server to run for each
         " language you want to support.
         let g:LanguageClient_serverCommands = {
-                    \ 'python': [ 'pyls' ],
+                    \ 'python': [ 'pipenv', 'run', 'pyls' ],
                     \ 'rust': [ 'rustup', 'run', 'stable', 'rls' ],
                     \ }
         let g:LanguageClient_autoStart = 1
