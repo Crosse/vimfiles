@@ -18,8 +18,8 @@ function! crosse#plugins#load() abort
         return
     endif
 
-    if has('nvim')
-        "set termguicolors
+    if has('nvim') && exists('+termguicolors')
+        set termguicolors
     endif
 
     filetype off
@@ -40,38 +40,83 @@ function! crosse#plugins#load() abort
     " standard way for any client (Vim, Emacs,      "
     " VSCode, etc.) to use.                         "
     """""""""""""""""""""""""""""""""""""""""""""""""
-    if has('nvim') || (v:version >= 800 && has('job') && has('channel'))
-        Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': '/bin/sh install.sh' }
-                    \ | Plug 'Shougo/echodoc.vim'           " Print documents in echo area.
+"    if has('nvim') || v:version >= 800
+"        Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': '/bin/sh install.sh' }
+"                    \ | Plug 'Shougo/echodoc.vim'           " Print documents in echo area.
+"
+"        " The Language Client needs to know which server to run for each
+"        " language you want to support.
+"        let g:pyls_bin = fnamemodify(g:python3_host_prog, ':p:h') . '/pyls'
+"        let g:pyls_logfile = tempname()
+"
+"        let g:LanguageClient_serverCommands = {
+"                    \ 'python': [ g:pyls_bin, '--log-file', g:pyls_logfile, '-v' ],
+"                    \ 'rust': [ 'rustup', 'run', 'stable', 'rls' ],
+"                    \ }
+"
+"        let g:LanguageClient_autoStart = 1
+"        let g:LanguageClient_changeThrottle = 0.5
+"        let g:LanguageClient_diagnosticsList = "quickfix"
+"
+"        " We're already guarded by has('nvim'), so coding directly to
+"        " the nvim config directory isn't horrible.
+"        let g:LanguageClient_settingsPath = $XDG_CONFIG_HOME . '/nvim/settings.json'
+"
+"        let g:LanguageClient_loggingLevel = 'INFO'
+"        let g:LanguageClient_loggingFile = tempname()
+"        nnoremap <silent> <leader>c :call LanguageClient_contextMenu()<CR>
+"
+"        if has('python') || has('python3')
+"            " A number of plugins provide information that
+"            " nvim-completion-manager can consume.
+"            Plug 'roxma/nvim-completion-manager'
+"                        \ | Plug 'Shougo/neco-vim', { 'for': 'vim' }
+"
+"            if !has('nvim')
+"                Plug 'roxma/vim-hug-neovim-rpc'
+"                Plug 'roxma/nvim-yarp'
+"            endif
+"        endif
+"    endif
 
-        " The Language Client needs to know which server to run for each
-        " language you want to support.
-        let g:LanguageClient_serverCommands = {
-                    \ 'python': [ 'pipenv', 'run', 'pyls' ],
-                    \ 'rust': [ 'rustup', 'run', 'stable', 'rls' ],
-                    \ }
-        let g:LanguageClient_autoStart = 1
-        let g:LanguageClient_changeThrottle = 0.5
-        let g:LanguageClient_diagnosticsList = "quickfix"
-        nnoremap <silent> <leader>c :call LanguageClient_contextMenu()<CR>
-    endif
+    " Asynchronous Lint Engine, with language client support
+    Plug 'w0rp/ale'
+    let g:ale_fix_on_save = 1
+    let g:ale_completion_enabled = 1
+    let g:airline#extensions#ale#enabled = 1
+    let g:ale_echo_msg_error_str = 'E'
+    let g:ale_echo_msg_warning_str = 'W'
+    let g:ale_echo_msg_format = '[%linter%: %severity%] %s %code%'
+    let g:ale_linters = {
+                \ 'c':      ['clangtidy', 'cppcheck'],
+                \ 'go':     ['gometalinter', 'gofmt'],
+                \ 'python': ['flake8', 'mypy', 'pydocstyle', 'pylint', 'pyls'],
+                \ 'rust':   ['rls'],
+                \}
+    let g:ale_fixers = {
+                \ 'c':      ['remove_trailing_lines', 'trim_whitespace'],
+                \ 'go':     ['gofmt', 'goimports', 'remove_trailing_lines', 'trim_whitespace'],
+                \ 'python': ['add_blank_lines_for_python_control_statements', 
+                \            'yapf', 'isort', 'remove_trailing_lines', 'trim_whitespace'],
+                \ 'rust':   ['rustfmt', 'remove_trailing_lines', 'trim_whitespace'],
+                \}
 
-    if (has('nvim') || v:version >= 800) && (has('python') || has('python3'))
-        " A number of plugins provide information that
-        " nvim-completion-manager can consume.
-        Plug 'roxma/nvim-completion-manager'
-                    \ | Plug 'Shougo/neco-vim', { 'for': 'vim' }
+    let g:ale_go_gometalinter_options = '--fast'
+    let $PATH = $PATH . ':' . fnamemodify(g:python3_host_prog, ':p:h')
+    let g:ale_rust_rls_toolchain = 'stable'
+    let g:ale_python_pyls_executable = 'pipenv'
+    let g:ale_python_pyls_options = '-vv --log-file ' . tempname()
+    let g:ale_cmake_cmakelint_options = '--linelength=120'
 
-        if !has('nvim')
-            Plug 'roxma/vim-hug-neovim-rpc'
-            Plug 'roxma/nvim-yarp'
-        endif
+    let s:cppcheck_suppressions_file = expand('~/.config/cppcheck/suppressions')
+    if filereadable(s:cppcheck_suppressions_file)
+        let g:ale_c_cppcheck_options = '--enable=all --inline-suppr --suppressions-list=' . s:cppcheck_suppressions_file
     endif
 
     " The de facto Go plugin for Vim.
     Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-    let g:go_fmt_command = "goimports"
-    let g:go_fmt_autosave = 1
+"    let g:go_fmt_command = "goimports"
+    let g:go_fmt_autosave = 0
 "    let g:go_auto_type_info = 1
     let g:go_highlight_functions = 1
     let g:go_highlight_methods = 1
@@ -81,9 +126,9 @@ function! crosse#plugins#load() abort
     let g:go_highlight_interfaces = 1
     let g:go_highlight_structs = 1
     let g:go_highlight_build_constraints = 1
-    let g:go_list_type = "quickfix"
+"    let g:go_list_type = "quickfix"
     au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
-    au FileType go setlocal noexpandtab shiftwidth=8
+"    au FileType go setlocal noexpandtab shiftwidth=8
 
     " Ideally, using a Go language server would be the best option.
     " However, the current Go LS doesn't support completion; instead,
@@ -109,24 +154,14 @@ function! crosse#plugins#load() abort
     "                                               "
     """""""""""""""""""""""""""""""""""""""""""""""""
 
-    Plug 'scrooloose/syntastic'                             " Syntax checking hacks for vim
-    let g:syntastic_go_checkers = ['golint', 'govet', 'go', 'errcheck']
-    let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 1
-    let g:syntastic_check_on_open = 1
-    let g:syntastic_check_on_wq = 0
-    " I only want to use one checker for Python, and I want to use them
-    " in this order. Find the first available one and use that
-    " exclusively. (Maybe this isn't needed.)
-    for pychecker in ['flake8', 'pyflake', 'pylint']
-        if executable(pychecker)
-            let g:syntastic_python_checkers = [pychecker]
-            break
-        endif
-    endfor
-
-    let g:syntastic_python_flake8_args='--ignore=E501'
+    "Plug 'scrooloose/syntastic'                             " Syntax checking hacks for vim
+    "let g:syntastic_python_checkers = [ 'pydocstyle' ]
+    "let g:syntastic_go_checkers = ['golint', 'govet', 'go', 'errcheck']
+    "let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'python'] }
+    "let g:syntastic_always_populate_loc_list = 1
+    "let g:syntastic_auto_loc_list = 1
+    "let g:syntastic_check_on_open = 1
+    "let g:syntastic_check_on_wq = 0
 
     Plug 'editorconfig/editorconfig-vim'                    " EditorConfig plugin for Vim (see http://editorconfig.org)
     Plug 'tpope/vim-fugitive'                               " a Git wrapper so awesome, it should be illegal
@@ -160,11 +195,11 @@ function! crosse#plugins#load() abort
     nnoremap <F7> :RainbowToggle<CR>
     inoremap <F7> <C-O>:RainbowToggle<CR>
 
-    Plug 'Crosse/gen_tags.vim', { 'branch': 'update' }      " Async plugin for vim and neovim to ease the use of ctags/gtags.
+    Plug 'jsfaint/gen_tags.vim'                             " Async plugin for vim and neovim to ease the use of ctags/gtags.
     let g:loaded_gentags#ctags = 1                          " If true, Disable ctags support.
-    let g:gen_tags#use_cache_dir = 0                        " If false(??), store tags files in SCM dir or ~/.cache.
+    let g:gen_tags#use_cache_dir = 1                        " If false, store tags files in SCM dir (or ~/.cache, if not in an SCM repo).
     let g:gen_tags#gtags_split = 'v'                        " Split vertically on find.
-    let g:gen_tags#gtags_auto_gen = 0                       " if true, Auto-generate gtags if in an SCM repo.
+    let g:gen_tags#gtags_auto_gen = 1                       " if true, auto-generate gtags if in an SCM repo.
 
     Plug 'jaxbot/semantic-highlight.vim'                    " Semantic Highlighting for Vim
 
@@ -185,6 +220,8 @@ function! crosse#plugins#load() abort
     Plug 'tpope/vim-markdown', {'for': ['markdown', 'COMMIT_EDITMSG', 'PULLREQ_EDITMSG']}
     let g:markdown_syntax_conceal = 0
     let g:markdown_fenced_languages = [ 'html', 'python', 'bash=sh', 'sh', 'vim', 'viml=vim' ]
+
+    Plug 'mfukar/robotframework-vim'
 
 
     """""""""""""""""""""""""""""""""""""""""""""""""
@@ -255,15 +292,7 @@ function! crosse#plugins#load() abort
     "   (That's right, it gets its own section.)    "
     """""""""""""""""""""""""""""""""""""""""""""""""
     if has('python') || has('python3')
-        " The following if-statements build up a command line depending
-        " on whether various things are installed. For instance, if
-        " msbuild is installed, then instruct YCM's installer to build
-        " the OmniSharp completer.
-"        if g:os.is_windows
-"            let ycm_install_command = ['install.py']
-"        else
-            let ycm_install_command = ['./install.py']
-"        endif
+        let ycm_install_command = ['./install.py']
         call add(ycm_install_command, '--clang-completer')
         Plug 'Valloric/YouCompleteMe',
                     \ { 'frozen': 1,

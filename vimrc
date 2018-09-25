@@ -1,4 +1,4 @@
-﻿""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim: set wildignore+=*/plugged/*:
 "
 " Copyright (c) 2009-2017 Seth Wright (seth@crosse.org)
@@ -146,7 +146,8 @@ if has("folding")
     endfunction
 endif
 
-
+" Enable Doxygen formatting
+let g:load_doxygen_syntax=1
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -360,6 +361,11 @@ set title
 
 " Open splits to the right or below the current window for vsp/sp, respectively.
 set nosplitbelow splitright
+
+" Remember the last line when reopening a file.
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+endif
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""

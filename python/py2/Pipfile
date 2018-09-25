@@ -4,8 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+mccabe = "*"
 neovim = "*"
-python-language-server = {version = "*", extras = ["all"]}
+pycodestyle = "*"
+pydocstyle = "*"
+pyflakes = "*"
+pyls-isort = "*"
+python-language-server = "*"
+rope = "*"
+yapf = "*"
 
 [dev-packages]
 
