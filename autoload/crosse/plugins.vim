@@ -40,44 +40,6 @@ function! crosse#plugins#load() abort
     " standard way for any client (Vim, Emacs,      "
     " VSCode, etc.) to use.                         "
     """""""""""""""""""""""""""""""""""""""""""""""""
-"    if has('nvim') || v:version >= 800
-"        Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': '/bin/sh install.sh' }
-"                    \ | Plug 'Shougo/echodoc.vim'           " Print documents in echo area.
-"
-"        " The Language Client needs to know which server to run for each
-"        " language you want to support.
-"        let g:pyls_bin = fnamemodify(g:python3_host_prog, ':p:h') . '/pyls'
-"        let g:pyls_logfile = tempname()
-"
-"        let g:LanguageClient_serverCommands = {
-"                    \ 'python': [ g:pyls_bin, '--log-file', g:pyls_logfile, '-v' ],
-"                    \ 'rust': [ 'rustup', 'run', 'stable', 'rls' ],
-"                    \ }
-"
-"        let g:LanguageClient_autoStart = 1
-"        let g:LanguageClient_changeThrottle = 0.5
-"        let g:LanguageClient_diagnosticsList = "quickfix"
-"
-"        " We're already guarded by has('nvim'), so coding directly to
-"        " the nvim config directory isn't horrible.
-"        let g:LanguageClient_settingsPath = $XDG_CONFIG_HOME . '/nvim/settings.json'
-"
-"        let g:LanguageClient_loggingLevel = 'INFO'
-"        let g:LanguageClient_loggingFile = tempname()
-"        nnoremap <silent> <leader>c :call LanguageClient_contextMenu()<CR>
-"
-"        if has('python') || has('python3')
-"            " A number of plugins provide information that
-"            " nvim-completion-manager can consume.
-"            Plug 'roxma/nvim-completion-manager'
-"                        \ | Plug 'Shougo/neco-vim', { 'for': 'vim' }
-"
-"            if !has('nvim')
-"                Plug 'roxma/vim-hug-neovim-rpc'
-"                Plug 'roxma/nvim-yarp'
-"            endif
-"        endif
-"    endif
 
     " Asynchronous Lint Engine, with language client support
     Plug 'w0rp/ale'
@@ -147,6 +109,12 @@ function! crosse#plugins#load() abort
     Plug 'elzr/vim-json', {'for': 'json'}                   " A better JSON plugin for Vim
     let g:vim_json_syntax_conceal = 0                       " ...but disable quote concealment, because wtf
 
+    Plug 'guns/vim-sexp'                                    " Precision Editing for S-expressions
+    Plug 'tpope/vim-repeat'                                 " enable repeating supported plugin maps with '.'
+
+    Plug 'tpope/vim-fireplace', {'for': 'clojure'}          " Clojure REPL support
+    Plug 'clojure-vim/vim-cider', {'for': 'clojure'}        " Additional IDE-like functionality for Clojure development using cider-nrepl
+
 
     """""""""""""""""""""""""""""""""""""""""""""""""
     "                                               "
@@ -203,6 +171,9 @@ function! crosse#plugins#load() abort
 
     Plug 'jaxbot/semantic-highlight.vim'                    " Semantic Highlighting for Vim
 
+    Plug 'vim-scripts/paredit.vim'                          " Add or remove matched characters in pairs.
+    Plug 'tpope/vim-surround'                               " quoting/parenthesizing made simple
+    Plug 'tpope/vim-repeat'                                 " enable repeating supported plugin maps with '.'
 
     """""""""""""""""""""""""""""""""""""""""""""""""
     "                                               "
@@ -211,7 +182,7 @@ function! crosse#plugins#load() abort
     """""""""""""""""""""""""""""""""""""""""""""""""
 
     " vim-systemd-syntax - because I hate myself, but not that much
-    Plug 'Matt-Deacalion/vim-systemd-syntax', { 'for': 'systemd'}
+    Plug 'Matt-Deacalion/vim-systemd-syntax', { 'for': 'systemd' }
 
     Plug 'ekalinin/Dockerfile.vim', {'for': 'Dockerfile'}   " Vim syntax file for Docker's Dockerfile
     Plug 'cespare/vim-toml', {'for': 'toml'}                " Vim syntax for TOML
