@@ -322,6 +322,10 @@ endif
 " C-D, etc.
 set nostartofline
 
+" Turn on the cursorline, which highlights the current line so you can
+" find it more easily.
+set cursorline
+
 " Indicates a fast terminal connection.  More characters will be sent to
 " the screen for redrawing, instead of using insert/delete line
 " commands.  Improves smoothness of redrawing when there are multiple

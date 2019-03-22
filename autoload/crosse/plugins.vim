@@ -72,7 +72,7 @@ function! crosse#plugins#load() abort
 
     let s:cppcheck_suppressions_file = expand('~/.config/cppcheck/suppressions')
     if filereadable(s:cppcheck_suppressions_file)
-        let g:ale_c_cppcheck_options = '--enable=all --inline-suppr --suppressions-list=' . s:cppcheck_suppressions_file
+        let g:ale_c_cppcheck_options = '-I include/ -I common/include/ --enable=all --inline-suppr --suppressions-list=' . s:cppcheck_suppressions_file
     endif
 
     " The de facto Go plugin for Vim.
@@ -134,6 +134,7 @@ function! crosse#plugins#load() abort
     Plug 'editorconfig/editorconfig-vim'                    " EditorConfig plugin for Vim (see http://editorconfig.org)
     Plug 'tpope/vim-fugitive'                               " a Git wrapper so awesome, it should be illegal
     Plug 'airblade/vim-gitgutter'                           " Shows a git diff in the gutter.
+    Plug 'rhysd/committia.vim'                              " More pleasant editing of commit messages
 
     if executable('ctags') || executable('exctags')
         " Vim plugin that displays tags in a window, ordered by scope
@@ -203,6 +204,11 @@ function! crosse#plugins#load() abort
 
     Plug 'ryanoasis/vim-devicons'                           " Adds file type glyphs/icons to popular Vim plugins
     Plug 'chriskempson/base16-vim'                          " Base16 theme(s) for Vim.
+
+    Plug 'RRethy/vim-illuminate'                            " Selectively illuminate other uses of the current word
+    let g:Illuminate_delay = 500
+    let g:Illuminate_ftblacklist = ['nerdtree', 'COMMIT_EDITMSG']
+    highlight link illuminatedWord Visual                   " ...and use the Visual style instead of cursorline style
 
     " lean & mean status/tabline for vim that's light as air
     Plug 'vim-airline/vim-airline'
