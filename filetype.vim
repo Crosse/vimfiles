@@ -16,8 +16,8 @@ augroup filetypedetect
     au! BufRead,BufNewFile *.tex setfiletype human
 
     " git commit messages
-    au! BufRead,BufNewFile COMMIT_EDITMSG setlocal formatoptions+=t textwidth=72 spell
-    au! BufRead,BufNewFile PULLREQ_EDITMSG setlocal formatoptions+=t textwidth=72 spell
+    "au! BufRead,BufNewFile COMMIT_EDITMSG setlocal formatoptions+=t textwidth=72 spell
+    "au! BufRead,BufNewFile PULLREQ_EDITMSG setlocal formatoptions+=t textwidth=72 spell
 
     " Arduino sketches.
     au! BufRead,BufNewFile *.ino setfiletype cpp
