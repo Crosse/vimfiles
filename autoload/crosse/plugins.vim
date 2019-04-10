@@ -122,15 +122,6 @@ function! crosse#plugins#load() abort
     "                                               "
     """""""""""""""""""""""""""""""""""""""""""""""""
 
-    "Plug 'scrooloose/syntastic'                             " Syntax checking hacks for vim
-    "let g:syntastic_python_checkers = [ 'pydocstyle' ]
-    "let g:syntastic_go_checkers = ['golint', 'govet', 'go', 'errcheck']
-    "let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'python'] }
-    "let g:syntastic_always_populate_loc_list = 1
-    "let g:syntastic_auto_loc_list = 1
-    "let g:syntastic_check_on_open = 1
-    "let g:syntastic_check_on_wq = 0
-
     Plug 'editorconfig/editorconfig-vim'                    " EditorConfig plugin for Vim (see http://editorconfig.org)
     Plug 'tpope/vim-fugitive'                               " a Git wrapper so awesome, it should be illegal
     Plug 'airblade/vim-gitgutter'                           " Shows a git diff in the gutter.
