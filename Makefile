@@ -1,4 +1,5 @@
 VIM ?= $(shell command -v vim;)
+SHELL := bash
 
 default: help
 
@@ -8,8 +9,10 @@ build: 			## Install vim-plug and plugins.
 build: vim-plug plugins
 
 neovim:			## Set up neovim.
-neovim: pysetup
-	@ln -snf $(CURDIR) $(XDG_CONFIG_HOME)/nvim
+neovim: $(XDG_CONFIG_HOME)/nvim pysetup
+
+$(XDG_CONFIG_HOME)/nvim:
+	@ln -snf $(CURDIR) $^
 
 pysetup:		## Setup Python for Vim/Neovim.
 pysetup: python2 python3 autoload/crosse/python.vim
